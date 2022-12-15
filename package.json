@@ -1,0 +1,30 @@
+{
+  "name": "mambee-template-nexjs",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "prepare": "husky install",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "12.3.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "18.7.23",
+    "@types/react": "18.0.21",
+    "@types/react-dom": "18.0.6",
+    "@typescript-eslint/eslint-plugin": "^5.38.1",
+    "eslint": "8.24.0",
+    "eslint-config-next": "12.3.1",
+    "eslint-config-prettier": "^8.5.0",
+    "husky": "^8.0.1",
+    "lint-staged": "^13.0.3",
+    "prettier": "^2.7.1",
+    "typescript": "4.8.4"
+  }
+}
