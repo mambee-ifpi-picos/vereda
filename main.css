@@ -1,0 +1,272 @@
+:root {
+    --background-color: #1a202c;
+    --card-color: #1a2037;
+    --font: Ubuntu, sans-serif;
+    --roadmap-color: #3a97d4;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background: var(--background-color);
+    font-family: var(--font);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #e5e5e5;
+    padding: 1rem;
+}
+
+a {
+    color: var(--roadmap-color);
+    cursor: pointer;
+}
+
+h1{
+    text-align: center;
+}
+
+/* Timeline Container */
+.timeline {
+    background: var(--background-color);
+    margin: 20px auto;
+    padding: 20px;
+}
+
+/* Card container */
+.card {
+    position: relative;
+    max-width: 400px;
+    counter-increment: section;
+}
+
+/* setting padding based on even or odd */
+.card:nth-child(odd) {
+    padding: 30px 0 30px 30px;
+}
+
+.card:nth-child(even) {
+    padding: 30px 30px 30px 0;
+}
+
+/* Global ::before */
+.card::before {
+    content: "";
+    position: absolute;
+    width: 50%;
+    border: solid var(--roadmap-color);
+    z-index: 1;
+}
+
+/* Setting the border of top, bottom, left */
+.card:nth-child(odd)::before {
+    left: 0px;
+    top: -4.5px;
+    bottom: -4.5px;
+    border-width: 5px 0 5px 5px;
+    border-radius: 50px 0 0 50px;
+}
+
+/* Setting the border of top, bottom, right */
+.card:nth-child(even)::before {
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-width: 5px 5px 5px 0;
+    border-radius: 0 50px 50px 0;
+}
+
+/* Removing the border if it is the first card */
+.card:first-child::before {
+    border-top: 0;
+    border-top-left-radius: 0;
+}
+
+/* Removing the border if it is the last card  and it's odd */
+.card:last-child:nth-child(odd)::before {
+    border-bottom: 0;
+    border-bottom-left-radius: 0;
+}
+
+/* Removing the border if it is the last card  and it's even */
+.card:last-child:nth-child(even)::before {
+    border-bottom: 0;
+    border-bottom-right-radius: 0;
+}
+
+/* Information about the timeline */
+.info {
+    display: flex;
+    flex-direction: column;
+    background: #313546;
+    color: #ECEDF2;
+    border-radius: 10px;
+    padding: 10px;
+    z-index: 9999;
+    position: relative;
+}
+
+.info ul {
+    margin: 0.3rem 1rem;
+}
+
+/* Title of the card */
+.title {
+    color: #ECEDF2;
+    position: relative;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px dashed #ECEDF2;
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+/* Timeline dot  */
+.title::before {
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background: var(--roadmap-color);
+    color: #FFF;
+    border-radius: 999px;
+    border: 3px solid var(--roadmap-color);
+}
+
+.card .checked h3, .card .checked p, .card .checked ul{
+    text-decoration: line-through;
+}
+
+/* text right if the card is even  */
+.card:nth-child(even)>.info>.title {
+    text-align: right;
+}
+
+/* setting dot to the left if the card is odd */
+.card:nth-child(odd)>.info>.title::before {
+    content: counter(section);
+    left: -60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* setting dot to the right if the card is odd */
+.card:nth-child(even)>.info>.title::before {
+    content: counter(section);
+    right: -60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card:nth-child(even)>.info>.title {
+    flex-direction: row-reverse;
+}
+
+/* check  */
+
+.label__checkbox {
+    display: none;
+}
+
+.label__check {
+    display: inline-block;
+    border-radius: 50%;
+    border: 5px solid rgba(0, 0, 0, 0.1);
+    background: #c66857;
+    width: 2em;
+    height: 2em;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border .3s ease;
+   
+
+    i.icon {
+        opacity: 0.2;
+        font-size: ~'calc(1rem + 1vw)';
+        color: transparent;
+        transition: opacity .3s .1s ease;
+        -webkit-text-stroke: 3px rgba(0, 0, 0, .5);
+    }
+
+    &:hover {
+        border: 5px solid rgba(0, 0, 0, 0.2);
+    }
+}
+
+.label__checkbox:checked+.label__text .label__check {
+    animation: check .0s cubic-bezier(0.895, 0.030, 0.685, 0.220) forwards;
+
+    .icon {
+        opacity: 1;
+        transform: scale(0);
+        color: white;
+        -webkit-text-stroke: 0;
+        animation: icon .3s cubic-bezier(1.000, 0.008, 0.565, 1.650) .1s 1 forwards;
+    }
+}
+
+.center {
+    position: absolute;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes icon {
+    from {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1)
+    }
+}
+
+@keyframes check {
+    0% {
+        width: 1.5em;
+        height: 1.5em;
+        border-width: 5px;
+    }
+
+    10% {
+        width: 1.5em;
+        height: 1.5em;
+        opacity: 0.1;
+        background: rgba(0, 0, 0, 0.2);
+        border-width: 15px;
+    }
+
+    12% {
+        width: 1.5em;
+        height: 1.5em;
+        opacity: 0.4;
+        background: rgba(0, 0, 0, 0.1);
+        border-width: 0;
+    }
+
+    50% {
+        width: 2em;
+        height: 2em;
+        background: #42b181;
+        border: 0;
+        opacity: 0.6;
+    }
+
+    100% {
+        width: 2em;
+        height: 2em;
+        background: #42b181;
+        border: 0;
+        opacity: 1;
+        border: 5px solid rgba(0, 0, 0, 0.1);
+    }
+}
