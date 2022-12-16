@@ -1,5 +1,7 @@
 # Vereda - Aplicativo de Roteiros de Objetivos de Aprendizagem
 
+**Vídeo explicativo do projeto:** [https://www.loom.com/share/d925b4394ca649b2a2c8eebe2f4e28fd](https://www.loom.com/share/d925b4394ca649b2a2c8eebe2f4e28fd)
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
