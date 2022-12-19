@@ -33,7 +33,7 @@ const Home: NextPage = () => {
           <img src="/static/navigator.svg" alt="mapa" />
         </picture>
         <Typography align="center" variant="subtitle1">
-          Aplicativo para acompanhamento de seu aprendizado
+          Aplicativo para acompanhamento de seu aprendizado!
         </Typography>
       </Box>
     </Container>
