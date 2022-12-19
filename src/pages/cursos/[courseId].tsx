@@ -3,7 +3,14 @@ import { Container } from '@mui/material'
 import Copyright from '../../components/Copyright'
 import { useRouter } from 'next/router'
 import { CourseType, LearningGoalType } from '../../types/CourseType'
-import { collection, getDocs, doc, getDoc } from 'firebase/firestore'
+import {
+  collection,
+  getDocs,
+  doc,
+  getDoc,
+  orderBy,
+  query,
+} from 'firebase/firestore'
 import { useEffect, useState } from 'react'
 import styles from '../../styles/Timeline.module.css'
 import Typography from '@mui/material/Typography'
@@ -39,10 +46,11 @@ const Goals: NextPage = () => {
       // doc.data() will be undefined in this case
       console.log('No such document!')
     }
+    const learningGoalsRef = collection(db, `courses/${courseId}/learningGoals`)
+    const q = query(learningGoalsRef, orderBy('sequence'))
 
-    const querySnapshot = await getDocs(
-      collection(db, `courses/${courseId}/learningGoals`)
-    )
+    const querySnapshot = await getDocs(q)
+
     const learningGoalsList: LearningGoalType[] = []
     querySnapshot.forEach((doc) => {
       // doc.data() is never undefined for query doc snapshots
