@@ -1,12 +1,13 @@
 import { initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
 const firebaseConfig = {
-  apiKey: 'AIzaSyDBwxLq3Vx5p4_reFI8q9AcAtBKPJkkJjw',
-  authDomain: 'vereda-test-8efb5.firebaseapp.com',
-  projectId: 'vereda-test-8efb5',
-  storageBucket: 'vereda-test-8efb5.appspot.com',
-  messagingSenderId: '455499074031',
-  appId: '1:455499074031:web:5558577df47186737e0e1a',
+  apiKey: 'AIzaSyByq9ohhLMl8JOeRQTvnbh6vhsbwZUfgP0',
+  authDomain: 'vereda-app.firebaseapp.com',
+  projectId: 'vereda-app',
+  storageBucket: 'vereda-app.appspot.com',
+  messagingSenderId: '67717473301',
+  appId: '1:67717473301:web:2385ded2a526d9baac5a1c',
+  measurementId: 'G-BTY8275BBS',
 }
 
 initializeApp(firebaseConfig)
