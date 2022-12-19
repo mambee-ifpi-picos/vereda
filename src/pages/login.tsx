@@ -13,6 +13,7 @@ import Grid from '@mui/material/Grid'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import { Container } from '@mui/material'
+import Copyright from '../components/Copyright'
 
 const Login = () => {
   const [email, setEmail] = useState('')
@@ -27,24 +28,6 @@ const Login = () => {
     } catch (error) {
       console.log(error)
     }
-  }
-
-  function Copyright() {
-    return (
-      <Typography
-        variant="body2"
-        sx={{ mx: 8, mt: 6 }}
-        color="text.secondary"
-        align="center"
-      >
-        {'Copyright © '}
-        <Link color="inherit" href="https://mui.com/">
-          Vereda
-        </Link>{' '}
-        {new Date().getFullYear()}
-        {'.'}
-      </Typography>
-    )
   }
 
   return (

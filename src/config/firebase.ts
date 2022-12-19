@@ -1,5 +1,7 @@
 import { initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
+import { getFirestore } from 'firebase/firestore'
+
 const firebaseConfig = {
   apiKey: 'AIzaSyByq9ohhLMl8JOeRQTvnbh6vhsbwZUfgP0',
   authDomain: 'vereda-app.firebaseapp.com',
@@ -10,6 +12,8 @@ const firebaseConfig = {
   measurementId: 'G-BTY8275BBS',
 }
 
-initializeApp(firebaseConfig)
+const app = initializeApp(firebaseConfig)
+const auth = getAuth(app)
+const db = getFirestore(app)
 
-export const auth = getAuth()
+export { auth, db }
