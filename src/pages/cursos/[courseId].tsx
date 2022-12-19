@@ -65,12 +65,12 @@ const Goals: NextPage = () => {
 
   return (
     <Container component="main" maxWidth="sm">
-      <Typography align="center" variant="h2" component="h2">
+      <Typography align="center" variant="h3" component="h3">
         {course?.name}
       </Typography>
       <Typography align="center" variant="subtitle1">
         <>
-          {course && format(course.startDate, 'dd/mm/yyyy')} {' - '}
+          {'de'} {course && format(course.startDate, 'dd/mm/yyyy')} {' até '}
           {course && format(course.endDate, 'dd/mm/yyyy')}
         </>
       </Typography>

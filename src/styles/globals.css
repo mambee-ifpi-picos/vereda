@@ -15,6 +15,10 @@ a {
   box-sizing: border-box;
 }
 
+main {
+  margin-top: 90px;
+}
+
 img {
   max-width: 100%;
   max-height: 100%;
