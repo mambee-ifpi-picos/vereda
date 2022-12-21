@@ -13,3 +13,7 @@ export interface LearningGoalType {
   sequence: number
   successIndicator: string
 }
+
+export interface GoalProp {
+  sequence: number
+}

@@ -10,7 +10,7 @@ import { collection, getDocs } from 'firebase/firestore'
 import { useEffect, useState } from 'react'
 
 import { db } from '../config/firebase'
-import { CourseType } from '../types/CourseType'
+import { CourseType } from '../types/Types'
 
 const CoursesList = () => {
   const [courses, setCourses] = useState<CourseType[]>([])

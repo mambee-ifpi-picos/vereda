@@ -2,7 +2,7 @@ import type { NextPage } from 'next'
 import { Container } from '@mui/material'
 import Copyright from '../../components/Copyright'
 import { useRouter } from 'next/router'
-import { CourseType, LearningGoalType } from '../../types/CourseType'
+import { CourseType, LearningGoalType } from '../../types/Types'
 import {
   collection,
   getDocs,

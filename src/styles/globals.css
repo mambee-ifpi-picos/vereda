@@ -25,10 +25,7 @@ img {
 }
 
 fieldset{
-    border: 1px solid #313546;
-    border-radius: 4px;
-    width: 100%;
-    margin: 8px 8px 16px 8px;
+
 }
 
 @media (prefers-color-scheme: dark) {
