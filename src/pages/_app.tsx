@@ -23,6 +23,14 @@ function MyApp(props: MyAppProps) {
       <CacheProvider value={emotionCache}>
         <Head>
           <meta name="viewport" content="initial-scale=1, width=device-width" />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Chilanka&display=swap"
+            rel="stylesheet"
+          ></link>
+          <link
+            href="https://fonts.googleapis.com/css2?family=Mulish&display=swap"
+            rel="stylesheet"
+          ></link>
         </Head>
         <ThemeProvider theme={theme}>
           <CssBaseline />

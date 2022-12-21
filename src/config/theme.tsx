@@ -9,14 +9,17 @@ const theme = createTheme({
     },
     mode: 'dark',
     primary: {
-      main: '#1a202c',
+      main: '#19857b',
     },
     secondary: {
-      main: '#19857b',
+      main: '#a3a4aa',
     },
     error: {
       main: red.A400,
     },
+  },
+  typography: {
+    fontFamily: ['Chilanka', 'Mulish', 'cursive'].join(','),
   },
 })
 export default theme

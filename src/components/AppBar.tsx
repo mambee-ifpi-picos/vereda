@@ -1,4 +1,6 @@
 import * as React from 'react'
+import { useState } from 'react'
+import { useRouter } from 'next/router'
 import AppBar from '@mui/material/AppBar'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
@@ -8,18 +10,24 @@ import Menu from '@mui/material/Menu'
 import MenuIcon from '@mui/icons-material/Menu'
 import Container from '@mui/material/Container'
 import Avatar from '@mui/material/Avatar'
+import Button from '@mui/material/Button'
 import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import AdbIcon from '@mui/icons-material/Adb'
+import { useAuth } from '../context/AuthContext'
 
-const pages = ['cursos']
+const pages = [
+  { title: 'cursos', link: '/cursos' },
+  { title: 'dashboard', link: '/cursos/dashboard' },
+  { title: 'novo', link: '/cursos/cadastro' },
+]
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
 
 function ResponsiveAppBar() {
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null)
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
-    null
-  )
+  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null)
+  const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
+  const router = useRouter()
+  const { user } = useAuth()
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget)
@@ -36,8 +44,13 @@ function ResponsiveAppBar() {
     setAnchorElUser(null)
   }
 
+  const handleNavigation = (page: string) => {
+    router.push(page)
+    handleCloseNavMenu()
+  }
+
   return (
-    <AppBar position="fixed" sx={{ background: '#1a202c' }}>
+    <AppBar position="fixed">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -56,7 +69,7 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            Vereda
+            LOGO
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -89,14 +102,11 @@ function ResponsiveAppBar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
-                  <Typography
-                    component="a"
-                    href={`/${page}`}
-                    textAlign="center"
-                  >
-                    {page.toUpperCase()}
-                  </Typography>
+                <MenuItem
+                  key={page.title}
+                  onClick={() => handleNavigation(page.link)}
+                >
+                  <Typography textAlign="center">{page.title}</Typography>
                 </MenuItem>
               ))}
             </Menu>
@@ -118,26 +128,27 @@ function ResponsiveAppBar() {
               textDecoration: 'none',
             }}
           >
-            Vereda
+            LOGO
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
-              <Typography
-                key={page}
-                onClick={handleCloseNavMenu}
+              <Button
+                key={page.title}
+                onClick={() => handleNavigation(page.link)}
                 sx={{ my: 2, color: 'white', display: 'block' }}
-                component="a"
-                href={`/${page}`}
               >
-                {page.toUpperCase()}
-              </Typography>
+                {page.title}
+              </Button>
             ))}
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                <Avatar
+                  alt={user.email || 'user'}
+                  src="/static/images/avatar/2.jpg"
+                />
               </IconButton>
             </Tooltip>
             <Menu
