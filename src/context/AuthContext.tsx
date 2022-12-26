@@ -14,8 +14,8 @@ import {
 import { auth } from '../config/firebase'
 
 interface UserType {
-  email: string | null
-  uid: string | null
+  email: string | undefined | null
+  uid: string | undefined | null
 }
 
 interface AuthContextType {

@@ -24,7 +24,7 @@ const Login = () => {
     e.preventDefault()
     try {
       await login(email, password)
-      router.push('/cursos/dashboard')
+      router.push('/cursos/')
     } catch (error) {
       console.log(error)
     }

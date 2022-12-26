@@ -27,6 +27,7 @@ const CoursesList = () => {
         description: doc.data().description,
         startDate: doc.data().startDate.toDate(),
         endDate: doc.data().endDate.toDate(),
+        ownerUser: doc.data().ownerUser,
       }
       courseList.push(course)
     })

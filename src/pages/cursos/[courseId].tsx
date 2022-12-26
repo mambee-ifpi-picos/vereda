@@ -34,11 +34,10 @@ const Goals: NextPage = () => {
     if (docSnap.exists()) {
       console.log('Document data:', docSnap.data())
       const c: CourseType = {
-        id: null,
-        description: null,
         name: docSnap.data().name,
         startDate: docSnap.data().startDate.toDate(),
         endDate: docSnap.data().endDate.toDate(),
+        ownerUser: docSnap.data().ownerUser,
       }
       setCourse(c)
       console.log(course)

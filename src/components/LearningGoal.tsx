@@ -1,8 +1,8 @@
 import TextField from '@mui/material/TextField'
 import Box from '@mui/material/Box'
-import { GoalProp } from '../types/Types'
+import { LearningGoalProp } from '../types/Types'
 
-function Goal({ sequence }: GoalProp) {
+function LearningGoal({ onChangeValue, learningGoal }: LearningGoalProp) {
   return (
     <Box
       component="fieldset"
@@ -26,32 +26,38 @@ function Goal({ sequence }: GoalProp) {
           fontFamily: 'Mulish',
         }}
       >
-        {sequence}
+        {learningGoal.sequence}
       </legend>
       <TextField
         fullWidth
         sx={{ m: 1 }}
-        id={`goal-${sequence}`}
+        id={`goal-${learningGoal.sequence}`}
         label="Objetivo"
         variant="outlined"
+        value={learningGoal.goal}
+        onChange={onChangeValue}
       />
       <TextField
         fullWidth
         sx={{ m: 1 }}
-        id={`goal-${sequence}-content`}
+        id={`content-${learningGoal.sequence}-content`}
         label="Conteúdo"
         multiline
         rows={2}
+        value={learningGoal.content}
+        onChange={onChangeValue}
       />
       <TextField
         fullWidth
         sx={{ m: 1 }}
-        id={`goal-${sequence}-success-indicator`}
+        id={`successIndicator-${learningGoal.sequence}`}
         label="Indicador de Sucesso"
         variant="outlined"
+        value={learningGoal.successIndicator}
+        onChange={onChangeValue}
       />
     </Box>
   )
 }
 
-export default Goal
+export default LearningGoal
