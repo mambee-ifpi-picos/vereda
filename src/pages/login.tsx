@@ -18,12 +18,21 @@ import Copyright from '../components/Copyright'
 const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const { login } = useAuth()
+  const { login, loginWithGoogle } = useAuth()
   const router = useRouter()
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault()
     try {
       await login(email, password)
+      router.push('/cursos/')
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const googleLogin = async () => {
+    try {
+      await loginWithGoogle()
       router.push('/cursos/')
     } catch (error) {
       console.log(error)
@@ -82,6 +91,15 @@ const Login = () => {
             sx={{ mt: 3, mb: 2 }}
           >
             Entrar
+          </Button>
+          <Button
+            type="button"
+            onClick={() => googleLogin()}
+            fullWidth
+            variant="outlined"
+            sx={{ mt: 3, mb: 2 }}
+          >
+            Login com Google
           </Button>
           <Grid container>
             <Grid item xs>
