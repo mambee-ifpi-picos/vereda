@@ -31,6 +31,9 @@ const Goals: NextPage = () => {
   const [course, setCourse] = useState<CourseType>()
 
   const subscribe = async () => {
+    if (!user.uid) {
+      router.push('/login')
+    }
     await updateDoc(courseDocRef, {
       students: arrayUnion(user.uid),
     })
