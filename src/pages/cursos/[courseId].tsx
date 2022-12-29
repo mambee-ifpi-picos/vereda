@@ -1,6 +1,5 @@
 import type { NextPage } from 'next'
-import { Container } from '@mui/material'
-import Copyright from '../../components/Copyright'
+import { Button, Container } from '@mui/material'
 import { useRouter } from 'next/router'
 import { CourseType, LearningGoalType } from '../../types/Types'
 import {
@@ -10,26 +9,37 @@ import {
   getDoc,
   orderBy,
   query,
+  updateDoc,
+  arrayUnion,
 } from 'firebase/firestore'
 import { useEffect, useState } from 'react'
 import styles from '../../styles/Timeline.module.css'
 import Typography from '@mui/material/Typography'
 import { format } from 'date-fns'
 import CheckIcon from '@mui/icons-material/Check'
-
+import { useAuth } from '../../context/AuthContext'
 import { db } from '../../config/firebase'
 
 const Goals: NextPage = () => {
   const router = useRouter()
+  const { user } = useAuth()
+
   const courseId: string = '' + router.query.courseId
+  const courseDocRef = doc(db, 'courses', courseId)
 
   const [learningGoals, setLearningGoals] = useState<LearningGoalType[]>()
   const [course, setCourse] = useState<CourseType>()
 
+  const subscribe = async () => {
+    await updateDoc(courseDocRef, {
+      students: arrayUnion(user.uid),
+    })
+  }
+
   const getLearningGoals = async () => {
     if (!courseId) return
-    const docRef = doc(db, 'courses', courseId)
-    const docSnap = await getDoc(docRef)
+
+    const docSnap = await getDoc(courseDocRef)
 
     if (docSnap.exists()) {
       console.log('Document data:', docSnap.data())
@@ -38,6 +48,7 @@ const Goals: NextPage = () => {
         startDate: docSnap.data().startDate.toDate(),
         endDate: docSnap.data().endDate.toDate(),
         ownerUser: docSnap.data().ownerUser,
+        students: docSnap.data().students,
       }
       setCourse(c)
       console.log(course)
@@ -77,10 +88,23 @@ const Goals: NextPage = () => {
       </Typography>
       <Typography align="center" variant="subtitle1">
         <>
-          {'de'} {course && format(course.startDate, 'dd/mm/yyyy')} {' até '}
-          {course && format(course.endDate, 'dd/mm/yyyy')}
+          {'de'} {course && format(course.startDate, 'dd/MM/yyyy')} {' até '}
+          {course && format(course.endDate, 'dd/MM/yyyy')}
         </>
       </Typography>
+      <Button
+        onClick={subscribe}
+        type="submit"
+        fullWidth
+        variant="contained"
+        sx={{ mt: 3, mb: 2 }}
+        disabled={course?.students?.includes(user.uid || '')}
+      >
+        {course?.students?.includes(user.uid || '')
+          ? 'Inscrito'
+          : 'Inscrever - se'}
+      </Button>
+
       <div className={styles.timeline}>
         {learningGoals &&
           learningGoals.map((learningGoal) => (
@@ -109,7 +133,6 @@ const Goals: NextPage = () => {
             </div>
           ))}
       </div>
-      <Copyright />
     </Container>
   )
 }

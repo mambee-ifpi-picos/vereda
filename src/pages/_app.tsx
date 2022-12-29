@@ -8,6 +8,7 @@ import theme from '../config/theme'
 import createEmotionCache from '../config/createEmotionCache'
 import { AuthContextProvider } from '../context/AuthContext'
 import AppBar from '../components/AppBar'
+import Copyright from '../components/Copyright'
 
 // Client-side cache, shared for the whole session of the user in the browser.
 const clientSideEmotionCache = createEmotionCache()
@@ -38,6 +39,7 @@ function MyApp(props: MyAppProps) {
           <Component {...pageProps} />
         </ThemeProvider>
       </CacheProvider>
+      <Copyright />
     </AuthContextProvider>
   )
 }

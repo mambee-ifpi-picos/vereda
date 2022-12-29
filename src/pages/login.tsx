@@ -5,15 +5,12 @@ import { useAuth } from '../context/AuthContext'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import TextField from '@mui/material/TextField'
-import FormControlLabel from '@mui/material/FormControlLabel'
-import Checkbox from '@mui/material/Checkbox'
-import Link from '@mui/material/Link'
 import Box from '@mui/material/Box'
-import Grid from '@mui/material/Grid'
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined'
 import Typography from '@mui/material/Typography'
 import { Container } from '@mui/material'
-import Copyright from '../components/Copyright'
+
+import GoogleIcon from '@mui/icons-material/Google'
 
 const Login = () => {
   const [email, setEmail] = useState('')
@@ -56,6 +53,24 @@ const Login = () => {
           Vereda
         </Typography>
         <Box component="form" onSubmit={onSubmit} noValidate sx={{ mt: 1 }}>
+          <Button
+            type="button"
+            onClick={() => googleLogin()}
+            fullWidth
+            variant="contained"
+            sx={{
+              mt: 3,
+              mb: 2,
+              display: 'flex',
+              justifyContent: 'center',
+              columnGap: '1rem',
+            }}
+          >
+            <GoogleIcon /> Login com Google
+          </Button>
+          <Typography component="p" align="center">
+            OU
+          </Typography>
           <TextField
             margin="normal"
             required
@@ -80,10 +95,6 @@ const Login = () => {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
-          />
           <Button
             type="submit"
             fullWidth
@@ -92,16 +103,8 @@ const Login = () => {
           >
             Entrar
           </Button>
-          <Button
-            type="button"
-            onClick={() => googleLogin()}
-            fullWidth
-            variant="outlined"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Login com Google
-          </Button>
-          <Grid container>
+
+          {/* <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">
                 Esqueceu senha?
@@ -112,10 +115,9 @@ const Login = () => {
                 {'Não têm uma conta? cadastre-se'}
               </Link>
             </Grid>
-          </Grid>
+          </Grid> */}
         </Box>
       </Box>
-      <Copyright />
     </Container>
   )
 }

@@ -19,6 +19,7 @@ import { auth, provider, db } from '../config/firebase'
 interface UserType {
   email: string | undefined | null
   uid: string | undefined | null
+  name: string | undefined | null
 }
 
 interface AuthContextType {
@@ -33,7 +34,11 @@ const AuthContext = createContext<AuthContextType>({} as AuthContextType)
 export const useAuth = () => useContext<AuthContextType>(AuthContext)
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<UserType>({ email: null, uid: null })
+  const [user, setUser] = useState<UserType>({
+    email: null,
+    uid: null,
+    name: null,
+  })
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -42,10 +47,11 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
         setUser({
           email: user.email,
           uid: user.uid,
+          name: user.displayName,
         })
         saveUser(user)
       } else {
-        setUser({ email: null, uid: null })
+        setUser({ email: null, uid: null, name: null })
       }
     })
     setLoading(false)
@@ -62,7 +68,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   }
 
   const logOut = async () => {
-    setUser({ email: null, uid: null })
+    setUser({ email: null, uid: null, name: null })
     await signOut(auth)
   }
 

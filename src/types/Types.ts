@@ -6,7 +6,7 @@ export interface CourseType {
   startDate: Date
   endDate: Date
   ownerUser: string | null | undefined
-  students?: string
+  students?: string[]
   learningGoals?: LearningGoalType[] | undefined
 }
 

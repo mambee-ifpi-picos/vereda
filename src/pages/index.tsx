@@ -2,6 +2,7 @@ import type { NextPage } from 'next'
 import { Container } from '@mui/material'
 import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
+import SchoolIcon from '@mui/icons-material/School'
 
 const Home: NextPage = () => {
   return (
@@ -26,12 +27,10 @@ const Home: NextPage = () => {
           rowGap: '2rem',
         }}
       >
+        <SchoolIcon sx={{ display: { xs: 'flex' }, mr: 1, fontSize: '5rem' }} />
         <Typography align="center" variant="h2" component="h2">
           Vereda
         </Typography>
-        <picture>
-          <img src="/static/navigator.svg" alt="mapa" />
-        </picture>
         <Typography align="center" variant="subtitle1">
           Aplicativo para acompanhamento de seu aprendizado!
         </Typography>
