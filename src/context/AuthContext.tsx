@@ -1,9 +1,12 @@
 import {
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signInWithPopup,
   signOut,
+  User,
   UserCredential,
 } from 'firebase/auth'
+import { doc, setDoc } from 'firebase/firestore'
 import {
   createContext,
   useContext,
@@ -11,7 +14,7 @@ import {
   useState,
   useEffect,
 } from 'react'
-import { auth } from '../config/firebase'
+import { auth, provider, db } from '../config/firebase'
 
 interface UserType {
   email: string | undefined | null
@@ -22,6 +25,7 @@ interface AuthContextType {
   user: UserType
   login: (email: string, password: string) => Promise<UserCredential>
   logOut: () => Promise<void>
+  loginWithGoogle: () => Promise<UserCredential>
 }
 
 const AuthContext = createContext<AuthContextType>({} as AuthContextType)
@@ -39,6 +43,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
           email: user.email,
           uid: user.uid,
         })
+        saveUser(user)
       } else {
         setUser({ email: null, uid: null })
       }
@@ -52,13 +57,24 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     return signInWithEmailAndPassword(auth, email, password)
   }
 
+  const loginWithGoogle = () => {
+    return signInWithPopup(auth, provider)
+  }
+
   const logOut = async () => {
     setUser({ email: null, uid: null })
     await signOut(auth)
   }
 
+  const saveUser = async (user: User) => {
+    await setDoc(doc(db, `users/${user.uid}`), {
+      name: user.displayName,
+      provider: user.providerId,
+    })
+  }
+
   return (
-    <AuthContext.Provider value={{ user, login, logOut }}>
+    <AuthContext.Provider value={{ user, login, logOut, loginWithGoogle }}>
       {loading ? null : children}
     </AuthContext.Provider>
   )
