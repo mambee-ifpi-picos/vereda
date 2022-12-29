@@ -21,13 +21,13 @@ const pages = [
   { title: 'dashboard', link: '/cursos/dashboard' },
   { title: 'novo', link: '/cursos/cadastro' },
 ]
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
+// const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null)
   const [anchorElUser, setAnchorElUser] = useState<null | HTMLElement>(null)
   const router = useRouter()
-  const { user } = useAuth()
+  const { user, logOut } = useAuth()
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget)
@@ -167,11 +167,11 @@ function ResponsiveAppBar() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              {/* {settings.map((setting) => ( */}
+              <MenuItem onClick={logOut}>
+                <Typography textAlign="center">Logout</Typography>
+              </MenuItem>
+              {/* ))} */}
             </Menu>
           </Box>
         </Toolbar>
