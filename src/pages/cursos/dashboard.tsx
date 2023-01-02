@@ -9,11 +9,11 @@ const DashboardPage = () => {
   return (
     <ProtectedRoute>
       <Container component="main" maxWidth="lg">
-        <Typography align="center" variant="h3" component="h3">
+        <Typography align="center" variant="h5" marginBottom={2}>
           Meu aprendizado
         </Typography>
         <CoursesList userType={CourseUserType.STUDENT} />
-        <Typography align="center" variant="h3" component="h3">
+        <Typography align="center" variant="h5" marginTop={4} marginBottom={2}>
           Meus Cursos
         </Typography>
         <Box
@@ -21,12 +21,18 @@ const DashboardPage = () => {
             display: 'flex',
             gap: '1rem',
             flexWrap: 'wrap',
+            justifyContent: 'center',
           }}
         >
           <CoursesList userType={CourseUserType.OWNER} />
           <Card
             variant="outlined"
-            sx={{ marginTop: 8, display: 'flex', alignItems: 'center' }}
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: { xs: '100%', md: 'auto' },
+            }}
           >
             <CardContent>
               <Typography variant="h3" component="div">

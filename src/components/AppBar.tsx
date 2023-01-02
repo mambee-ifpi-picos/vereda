@@ -13,8 +13,8 @@ import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
 import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
-import SchoolIcon from '@mui/icons-material/School'
 import { useAuth } from '../context/AuthContext'
+import Image from 'next/image'
 
 interface PageType {
   title: string
@@ -65,10 +65,12 @@ function ResponsiveAppBar() {
   }
 
   return (
-    <AppBar position="fixed">
+    <AppBar position="fixed" sx={{ backgroundColor: '#1a202c' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <SchoolIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          <Box sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}>
+            <Image src="/static/logo.png" width={48} height={48} alt="logo" />
+          </Box>
           <Typography
             variant="h6"
             noWrap
@@ -130,7 +132,9 @@ function ResponsiveAppBar() {
               )}
             </Menu>
           </Box>
-          <SchoolIcon sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }} />
+          <Box sx={{ display: { xs: 'flex', md: 'none' }, mr: 1 }}>
+            <Image src="/static/logo.png" width={32} height={32} alt="logo" />
+          </Box>
           <Typography
             variant="h5"
             noWrap

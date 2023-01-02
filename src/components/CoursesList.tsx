@@ -75,20 +75,26 @@ const CoursesList = ({ userType }: CourseUserTypeProp) => {
   return (
     <Box
       sx={{
-        marginTop: 8,
         display: 'flex',
         alignItems: 'center',
         gap: '1rem',
         flexWrap: 'wrap',
+        justifyContent: { xs: 'center' },
       }}
     >
       {courses &&
         courses.map((course) => (
-          <Card key={course.id} variant="outlined">
+          <Card
+            key={course.id}
+            variant="outlined"
+            sx={{
+              width: { xs: '100%', md: 'auto' },
+              maxWidth: '450px',
+              minWidth: '250px',
+            }}
+          >
             <CardContent>
-              <Typography variant="h5" component="div">
-                {course.name}
-              </Typography>
+              <Typography variant="h6">{course.name}</Typography>
               <Typography sx={{ mb: 1.5 }} color="text.secondary">
                 {`Criado por ${course.ownerUser}`}
               </Typography>
