@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import Box from '@mui/material/Box'
 import Card from '@mui/material/Card'
 import CardActions from '@mui/material/CardActions'
@@ -5,18 +6,42 @@ import CardContent from '@mui/material/CardContent'
 import Link from '@mui/material/Link'
 import Typography from '@mui/material/Typography'
 import { format } from 'date-fns'
+import { useAuth } from '../context/AuthContext'
 
-import { collection, getDocs, doc, getDoc } from 'firebase/firestore'
+import {
+  collection,
+  getDocs,
+  doc,
+  getDoc,
+  query,
+  where,
+} from 'firebase/firestore'
 import { useEffect, useState } from 'react'
 
 import { db } from '../config/firebase'
-import { CourseType } from '../types/Types'
+import { CourseType, CourseUserType, CourseUserTypeProp } from '../types/Types'
 
-const CoursesList = () => {
+const CoursesList = ({ userType }: CourseUserTypeProp) => {
+  const { user } = useAuth()
   const [courses, setCourses] = useState<CourseType[]>([])
 
+  const courseCollectionRef = collection(db, 'courses')
+
   const getCourses = async () => {
-    const querySnapshot = await getDocs(collection(db, 'courses'))
+    let q = collection(db, 'courses')
+    if (userType == CourseUserType.OWNER) {
+      // @ts-ignore
+      q = query(courseCollectionRef, where('ownerUser', '==', user.uid))
+    } else if (userType == CourseUserType.STUDENT) {
+      // @ts-ignore
+      q = query(
+        courseCollectionRef,
+        where('students', 'array-contains', user.uid)
+      )
+    }
+
+    const querySnapshot = await getDocs(q)
+
     querySnapshot.forEach(async (doc) => {
       const userName = await getUserName(doc.data().ownerUser)
       const course: CourseType = {

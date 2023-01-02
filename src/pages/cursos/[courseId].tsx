@@ -1,7 +1,7 @@
 import type { NextPage } from 'next'
 import { Button, Container } from '@mui/material'
 import { useRouter } from 'next/router'
-import { CourseType, LearningGoalType } from '../../types/Types'
+import { CourseType, LearningGoalType, ModalType } from '../../types/Types'
 import {
   collection,
   getDocs,
@@ -12,22 +12,24 @@ import {
   updateDoc,
   arrayUnion,
 } from 'firebase/firestore'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import styles from '../../styles/Timeline.module.css'
 import Typography from '@mui/material/Typography'
 import { format } from 'date-fns'
 import CheckIcon from '@mui/icons-material/Check'
 import { useAuth } from '../../context/AuthContext'
 import { db } from '../../config/firebase'
+import ModalConfirm from '../../components/ModalConfirm'
 
 const Goals: NextPage = () => {
+  const ref = useRef<ModalType>()
   const router = useRouter()
   const { user } = useAuth()
 
   const courseId: string = '' + router.query.courseId
   const courseDocRef = doc(db, 'courses', courseId)
 
-  const [learningGoals, setLearningGoals] = useState<LearningGoalType[]>()
+  const [learningGoals, setLearningGoals] = useState<LearningGoalType[]>([])
   const [course, setCourse] = useState<CourseType>()
 
   const subscribe = async () => {
@@ -37,6 +39,37 @@ const Goals: NextPage = () => {
     await updateDoc(courseDocRef, {
       students: arrayUnion(user.uid),
     })
+  }
+
+  const updateLeaningGoal = async (learningGoalId: string) => {
+    if (!user.uid) {
+      router.push('/login')
+    }
+    const learningGoalRef = doc(
+      db,
+      `courses/${courseId}/learningGoals`,
+      learningGoalId
+    )
+    await updateDoc(learningGoalRef, {
+      studentsCompleted: arrayUnion(user.uid),
+    })
+    console.log('updateLeaningGoal finish')
+    updateLocalLearningGoal(learningGoalId)
+    ref.current?.close()
+  }
+
+  const updateLocalLearningGoal = (learningGoalId: string) => {
+    const newState = learningGoals.map((obj) => {
+      if (obj.id == learningGoalId) {
+        return {
+          ...obj,
+          studentsCompleted: [...(obj.studentsCompleted || []), user.uid || ''],
+        }
+      }
+      return obj
+    })
+
+    if (newState) setLearningGoals(newState)
   }
 
   const getLearningGoals = async () => {
@@ -74,6 +107,7 @@ const Goals: NextPage = () => {
         content: doc.data().content,
         sequence: doc.data().sequence,
         successIndicator: doc.data().successIndicator,
+        studentsCompleted: doc.data().studentsCompleted,
       }
       learningGoalsList.push(learningGoal)
     })
@@ -116,10 +150,35 @@ const Goals: NextPage = () => {
                 <div className={styles.title}>
                   <h3>{learningGoal.goal}</h3>
                   <label className={styles.label}>
-                    <input className={styles.label__checkbox} type="checkbox" />
+                    <input
+                      disabled={!course?.students?.includes(user.uid || '')}
+                      checked={learningGoal.studentsCompleted?.includes(
+                        user.uid || ''
+                      )}
+                      className={styles.label__checkbox}
+                      type="checkbox"
+                    />
                     <span className={styles.label__text}>
                       <span className={styles.label__check}>
-                        <CheckIcon />
+                        <ModalConfirm
+                          disable={!course?.students?.includes(user.uid || '')}
+                          ref={ref}
+                          icon={
+                            <CheckIcon
+                              color={
+                                learningGoal.studentsCompleted?.includes(
+                                  user.uid || ''
+                                )
+                                  ? 'primary'
+                                  : 'secondary'
+                              }
+                            />
+                          }
+                          title={learningGoal.goal || ''}
+                          confirmAction={() =>
+                            updateLeaningGoal(learningGoal.id || '')
+                          }
+                        />
                       </span>
                     </span>
                   </label>
