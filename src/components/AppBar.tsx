@@ -15,6 +15,7 @@ import Tooltip from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import { useAuth } from '../context/AuthContext'
 import Image from 'next/image'
+import LoginIcon from '@mui/icons-material/Login'
 
 interface PageType {
   title: string
@@ -199,7 +200,17 @@ function ResponsiveAppBar() {
               </Menu>
             </Box>
           ) : (
-            ''
+            <Box sx={{ flexGrow: 0 }}>
+              <MenuItem
+                sx={{ textTransform: 'capitalize' }}
+                onClick={() => handleNavigation('/login')}
+              >
+                <Typography marginRight={1} textAlign="center">
+                  Login
+                </Typography>
+                <LoginIcon />
+              </MenuItem>
+            </Box>
           )}
         </Toolbar>
       </Container>

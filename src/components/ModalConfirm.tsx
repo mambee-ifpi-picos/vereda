@@ -44,7 +44,7 @@ const ModalConfirm = forwardRef(
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button variant="outlined" onClick={handleClose}>
+            <Button variant="contained" color="error" onClick={handleClose}>
               Cancelar
             </Button>
             <Button variant="contained" onClick={confirmAction} autoFocus>

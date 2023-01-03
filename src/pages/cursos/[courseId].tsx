@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 import type { NextPage } from 'next'
-import { Button, Container } from '@mui/material'
+import { Box, Button, Container } from '@mui/material'
 import { useRouter } from 'next/router'
 import { CourseType, LearningGoalType, ModalType } from '../../types/Types'
 import {
@@ -20,6 +21,7 @@ import CheckIcon from '@mui/icons-material/Check'
 import { useAuth } from '../../context/AuthContext'
 import { db } from '../../config/firebase'
 import ModalConfirm from '../../components/ModalConfirm'
+import { LinearProgress } from '@mui/material'
 
 const Goals: NextPage = () => {
   const ref = useRef<ModalType>()
@@ -38,6 +40,12 @@ const Goals: NextPage = () => {
     }
     await updateDoc(courseDocRef, {
       students: arrayUnion(user.uid),
+    })
+    course?.students?.push(user.uid || '')
+    // @ts-ignore
+    setCourse({
+      ...course,
+      students: [...(course?.students || []), user.uid || ''],
     })
   }
 
@@ -118,6 +126,24 @@ const Goals: NextPage = () => {
     getLearningGoals()
   }, [courseId])
 
+  function isCompleted(learningGoal: LearningGoalType): boolean {
+    return learningGoal.studentsCompleted?.includes(user.uid || '') || false
+  }
+
+  function getCourseProgress(): number {
+    const total = learningGoals.length
+    const completed = learningGoals.reduce((r, a) => {
+      return r + (a?.studentsCompleted?.includes(user.uid || '') ? 1 : 0)
+    }, 0)
+    const diff = completed / total
+    const percent = diff * 100 > 100 ? 100 : diff * 100
+    return percent || 0
+  }
+
+  function isSubscribed(): boolean {
+    return course?.students?.includes(user.uid || '') || false
+  }
+
   return (
     <Container component="main" maxWidth="sm">
       <Typography align="center" variant="h3" component="h3">
@@ -135,40 +161,54 @@ const Goals: NextPage = () => {
         fullWidth
         variant="contained"
         sx={{ mt: 3, mb: 2 }}
-        disabled={course?.students?.includes(user.uid || '')}
+        disabled={isSubscribed()}
       >
-        {course?.students?.includes(user.uid || '')
-          ? 'Inscrito'
-          : 'Inscrever - se'}
+        {isSubscribed() ? 'Inscrito' : 'Inscrever - se'}
       </Button>
+
+      <Box
+        alignItems="center"
+        p={3}
+        sx={{ display: isSubscribed() ? 'flex' : 'none' }}
+      >
+        <Box width="100%" mr={3}>
+          <LinearProgress variant="determinate" value={getCourseProgress()} />
+        </Box>
+        <Box minWidth={35}>
+          <Typography variant="body2" color="textSecondary">{`${Math.round(
+            getCourseProgress()
+          )}%`}</Typography>
+        </Box>
+      </Box>
 
       <div className={styles.timeline}>
         {learningGoals &&
           learningGoals.map((learningGoal) => (
-            <div key={learningGoal.id} className={styles.card}>
+            <div
+              key={learningGoal.id}
+              className={`${styles.card} ${
+                isCompleted(learningGoal) ? styles.completed : ''
+              }`}
+            >
               <div className={styles.info}>
                 <div className={styles.title}>
                   <h3>{learningGoal.goal}</h3>
                   <label className={styles.label}>
                     <input
-                      disabled={!course?.students?.includes(user.uid || '')}
-                      checked={learningGoal.studentsCompleted?.includes(
-                        user.uid || ''
-                      )}
+                      disabled={!isSubscribed()}
+                      defaultChecked={isCompleted(learningGoal)}
                       className={styles.label__checkbox}
                       type="checkbox"
                     />
                     <span className={styles.label__text}>
                       <span className={styles.label__check}>
                         <ModalConfirm
-                          disable={!course?.students?.includes(user.uid || '')}
+                          disable={!isSubscribed()}
                           ref={ref}
                           icon={
                             <CheckIcon
                               color={
-                                learningGoal.studentsCompleted?.includes(
-                                  user.uid || ''
-                                )
+                                isCompleted(learningGoal)
                                   ? 'primary'
                                   : 'secondary'
                               }

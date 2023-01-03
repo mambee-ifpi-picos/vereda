@@ -19,7 +19,7 @@ const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: ['Mulish', 'Chilanka', 'cursive'].join(','),
+    fontFamily: ['Chilanka', 'Mulish', 'cursive'].join(','),
   },
 })
 export default theme

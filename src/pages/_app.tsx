@@ -27,6 +27,7 @@ function MyApp(props: MyAppProps) {
           <link rel="manifest" href="/manifest.json" />
           <link rel="apple-touch-icon" href="/apple-touch-icon.png"></link>
           <meta name="theme-color" content="#1a202c" />
+          <title>Vereda - App para acompanhamento de seu aprendizado</title>
         </Head>
         <ThemeProvider theme={theme}>
           <CssBaseline />

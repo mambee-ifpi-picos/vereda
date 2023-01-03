@@ -21,7 +21,7 @@ const Login = () => {
     e.preventDefault()
     try {
       await login(email, password)
-      router.push('/cursos/')
+      router.push('/cursos/dashboard')
     } catch (error) {
       console.log(error)
     }
@@ -30,7 +30,7 @@ const Login = () => {
   const googleLogin = async () => {
     try {
       await loginWithGoogle()
-      router.push('/cursos/')
+      router.push('/cursos/dashboard')
     } catch (error) {
       console.log(error)
     }

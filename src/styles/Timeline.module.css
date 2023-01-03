@@ -10,8 +10,8 @@
 /* Timeline Container */
 .timeline {
   background: var(--background-color);
-  margin: 20px auto;
-  padding: 20px;
+  margin: 0 auto;
+  padding: 5px 10px;
 }
 
 /* Card container */
@@ -20,6 +20,8 @@
   max-width: 600px;
   counter-increment: section;
 }
+
+.completed {}
 
 /* setting padding based on even or odd */
 .card:nth-child(odd) {
@@ -108,10 +110,20 @@
   position: absolute;
   width: 40px;
   height: 40px;
-  background: #3a97d4;
   color: #FFF;
   border-radius: 999px;
+  background: #3a97d4;
   border: 3px solid #3a97d4;
+}
+
+
+.completed::before {
+  border-color: #19857b;
+}
+
+.completed .title::before {
+  background: #19857b;
+  border-color: #19857b;
 }
 
 .card .checked h3,
