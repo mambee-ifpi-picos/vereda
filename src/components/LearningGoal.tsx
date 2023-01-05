@@ -34,6 +34,7 @@ function LearningGoal({ onChangeValue, learningGoal }: LearningGoalProp) {
         id={`goal-${learningGoal.sequence}`}
         label="Objetivo"
         variant="outlined"
+        error={!learningGoal.goal || learningGoal.goal.length < 10}
         value={learningGoal.goal}
         onChange={onChangeValue}
       />
@@ -43,6 +44,7 @@ function LearningGoal({ onChangeValue, learningGoal }: LearningGoalProp) {
         id={`content-${learningGoal.sequence}-content`}
         label="Conteúdo"
         multiline
+        error={!learningGoal.content || learningGoal.content.length < 10}
         rows={2}
         value={learningGoal.content}
         onChange={onChangeValue}
@@ -53,6 +55,10 @@ function LearningGoal({ onChangeValue, learningGoal }: LearningGoalProp) {
         id={`successIndicator-${learningGoal.sequence}`}
         label="Indicador de Sucesso"
         variant="outlined"
+        error={
+          !learningGoal.successIndicator ||
+          learningGoal.successIndicator.length < 10
+        }
         value={learningGoal.successIndicator}
         onChange={onChangeValue}
       />

@@ -11,7 +11,7 @@ import { useRouter } from 'next/router'
 import dayjs, { Dayjs } from 'dayjs'
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider'
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs'
-import { DateTimePicker } from '@mui/x-date-pickers'
+import { DatePicker } from '@mui/x-date-pickers'
 import { FormEvent, useState } from 'react'
 
 import AddIcon from '@mui/icons-material/Add'
@@ -65,19 +65,56 @@ const FormPage = () => {
         endDate: endDate?.toDate() || new Date(),
         ownerUser: user.uid,
       }
-      const docRef = await addDoc(collection(db, 'courses'), newCourse)
-      console.log('Document written with ID: ', docRef.id)
-      learningGoals.forEach((learningGoal) => {
-        console.log('learningGoal => ', learningGoal)
-        addDoc(
-          collection(db, 'courses', docRef.id, 'learningGoals'),
-          learningGoal
-        )
-      })
-      router.push('/cursos/')
+      if (validateRequiredFields(newCourse)) {
+        const docRef = await addDoc(collection(db, 'courses'), newCourse)
+        console.log('Document written with ID: ', docRef.id)
+        learningGoals.forEach((learningGoal) => {
+          console.log('learningGoal => ', learningGoal)
+          addDoc(
+            collection(db, 'courses', docRef.id, 'learningGoals'),
+            learningGoal
+          )
+        })
+        router.push('/cursos/')
+      } else {
+        console.error('campos inválidos')
+      }
     } catch (error) {
       console.log(error)
     }
+  }
+
+  const validateRequiredFields = (courseValidate: CourseType): boolean => {
+    if (!courseValidate.name || courseValidate.name.length < 2) {
+      return false
+    }
+    if (!courseValidate.description || courseValidate.description.length < 10) {
+      return false
+    }
+    if (
+      !courseValidate.startDate ||
+      courseValidate.startDate > courseValidate.endDate
+    ) {
+      return false
+    }
+    if (!courseValidate.endDate) {
+      return false
+    }
+    if (!courseValidate.ownerUser) {
+      return false
+    }
+    courseValidate.learningGoals?.forEach((item) => {
+      if (!item.goal || item.goal.length < 10) {
+        return false
+      }
+      if (!item.content || item.content.length < 10) {
+        return false
+      }
+      if (!item.successIndicator || item.successIndicator.length < 10) {
+        return false
+      }
+    })
+    return true
   }
 
   return (
@@ -114,6 +151,7 @@ const FormPage = () => {
             sx={{ m: 1 }}
             id="name"
             label="Nome"
+            error={!name || name.length < 2}
             variant="outlined"
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -124,6 +162,7 @@ const FormPage = () => {
             sx={{ m: 1 }}
             id="description"
             label="Descrição do curso"
+            error={!name || name.length < 15}
             multiline
             rows={3}
             value={description}
@@ -140,20 +179,38 @@ const FormPage = () => {
             }}
           >
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DateTimePicker
-                renderInput={(props) => <TextField {...props} />}
+              <DatePicker
+                renderInput={(props) => (
+                  <TextField
+                    {...props}
+                    error={
+                      startDate == null ||
+                      (endDate ? endDate < startDate : false)
+                    }
+                  />
+                )}
                 inputFormat="DD/MM/YYYY"
                 label="Data inicial"
                 value={startDate}
+                minDate={dayjs()}
                 onChange={(newValue) => {
                   setStartDate(newValue)
                 }}
               />
-              <DateTimePicker
-                renderInput={(props) => <TextField {...props} />}
+              <DatePicker
                 inputFormat="DD/MM/YYYY"
                 label="Data final"
                 value={endDate}
+                renderInput={(props) => (
+                  <TextField
+                    {...props}
+                    error={
+                      endDate == null ||
+                      (startDate ? endDate < startDate : false)
+                    }
+                  />
+                )}
+                minDate={startDate}
                 onChange={(newValue) => {
                   setEndDate(newValue)
                 }}
