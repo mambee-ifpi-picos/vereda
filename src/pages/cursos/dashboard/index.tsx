@@ -1,7 +1,7 @@
 import { Box, Card, CardContent, Container, Typography } from '@mui/material'
-import ProtectedRoute from '../../components/ProtectedRoute'
-import CoursesList from '../../components/CoursesList'
-import { CourseUserType } from '../../types/Types'
+import ProtectedRoute from '../../../components/ProtectedRoute'
+import CoursesList from '../../../components/CoursesList'
+import { CourseUserType } from '../../../types/Types'
 import AddIcon from '@mui/icons-material/Add'
 import Link from 'next/link'
 

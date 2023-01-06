@@ -1,5 +1,10 @@
 import { ReactElement } from 'react'
 
+export interface StudentType {
+  uid: string
+  name: string
+}
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export interface CourseType {
   id?: string | undefined
@@ -10,6 +15,7 @@ export interface CourseType {
   ownerUser: string | null | undefined
   students?: string[]
   learningGoals?: LearningGoalType[] | undefined
+  studentsUser?: StudentType[]
 }
 
 export interface LearningGoalType {

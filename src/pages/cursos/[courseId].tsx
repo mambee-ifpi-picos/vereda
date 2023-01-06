@@ -86,7 +86,6 @@ const Goals: NextPage = () => {
     const docSnap = await getDoc(courseDocRef)
 
     if (docSnap.exists()) {
-      console.log('Document data:', docSnap.data())
       const c: CourseType = {
         name: docSnap.data().name,
         startDate: docSnap.data().startDate.toDate(),
@@ -95,7 +94,6 @@ const Goals: NextPage = () => {
         students: docSnap.data().students,
       }
       setCourse(c)
-      console.log(course)
     } else {
       // doc.data() will be undefined in this case
       console.log('No such document!')

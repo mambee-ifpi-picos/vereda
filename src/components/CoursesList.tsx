@@ -20,6 +20,7 @@ import { useEffect, useState } from 'react'
 
 import { db } from '../config/firebase'
 import { CourseType, CourseUserType, CourseUserTypeProp } from '../types/Types'
+import AnalyticsIcon from '@mui/icons-material/Analytics'
 
 const CoursesList = ({ userType }: CourseUserTypeProp) => {
   const { user } = useAuth()
@@ -106,14 +107,27 @@ const CoursesList = ({ userType }: CourseUserTypeProp) => {
                 </>
               </Typography>
             </CardContent>
-            <CardActions>
+            <CardActions
+              sx={{ display: 'flex', justifyContent: 'space-between' }}
+            >
               <Link
-                color="#10ddca"
+                color="#66DC71"
                 underline="hover"
                 href={`/cursos/${course.id}`}
               >
                 Acessar Curso
               </Link>
+              {userType == CourseUserType.OWNER ? (
+                <Link
+                  color="#66DC71"
+                  underline="hover"
+                  href={`/cursos/dashboard/${course.id}`}
+                >
+                  <AnalyticsIcon />
+                </Link>
+              ) : (
+                ''
+              )}
             </CardActions>
           </Card>
         ))}
