@@ -6,7 +6,7 @@ import {
   User,
   UserCredential,
 } from 'firebase/auth'
-import { doc, setDoc } from 'firebase/firestore'
+import { doc, setDoc, updateDoc } from 'firebase/firestore'
 import {
   createContext,
   useContext,
@@ -73,10 +73,17 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   }
 
   const saveUser = async (user: User) => {
-    await setDoc(doc(db, `users/${user.uid}`), {
-      name: user.displayName,
-      provider: user.providerId,
-    })
+    try {
+      await updateDoc(doc(db, `users/${user.uid}`), {
+        name: user.displayName,
+        provider: user.providerId,
+      })
+    } catch {
+      await setDoc(doc(db, `users/${user.uid}`), {
+        name: user.displayName,
+        provider: user.providerId,
+      })
+    }
   }
 
   return (
