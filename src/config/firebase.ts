@@ -3,7 +3,7 @@ import { getAuth, GoogleAuthProvider } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore'
 
 const firebaseConfig = {
-  apiKey: process.env.API_KEY,
+  apiKey: process.env.FIREBASE_API_KEY,
   authDomain: 'vereda-app.firebaseapp.com',
   projectId: 'vereda-app',
   storageBucket: 'vereda-app.appspot.com',

@@ -11,4 +11,7 @@ const withPWA = require('next-pwa')({
 module.exports = withPWA({
   // next.js config
   reactStrictMode: false,
+  env: {
+    FIREBASE_API_KEY: process.env.API_KEY,
+  },
 })
