@@ -31,7 +31,7 @@ const Home: NextPage = () => {
         <Typography align="center" variant="h2" component="h2">
           Vereda
         </Typography>
-        <Typography align="center" variant="subtitle1">
+        <Typography align="center" variant="h6">
           Aplicativo para acompanhamento de seu aprendizado!
         </Typography>
       </Box>

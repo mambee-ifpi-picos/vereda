@@ -119,7 +119,7 @@ const CoursesList = ({ userType }: CourseUserTypeProp) => {
               </Link>
               {userType == CourseUserType.OWNER ? (
                 <Link
-                  color="#66DC71"
+                  color="#66bb6a"
                   underline="hover"
                   href={`/cursos/dashboard/${course.id}`}
                 >
