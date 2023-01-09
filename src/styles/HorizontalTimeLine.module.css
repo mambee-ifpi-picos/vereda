@@ -7,6 +7,7 @@
 
 .timeline li {
     transition: all 200ms ease-in;
+    counter-increment: goal;
 }
 
 .timestamp {
@@ -29,16 +30,20 @@
 }
 
 .status:before {
-    content: "";
+    content: counter(goal);
     width: 25px;
     height: 25px;
     background-color: white;
+    color: #19857b;
     border-radius: 25px;
     border: 1px solid #ddd;
     position: absolute;
     top: -15px;
     left: 42%;
     transition: all 200ms ease-in;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .timeline li.complete .status {
@@ -47,6 +52,7 @@
 
 .timeline li.complete .status:before {
     background-color: #19857b;
+    color: #fff;
     border: none;
     transition: all 200ms ease-in;
 }

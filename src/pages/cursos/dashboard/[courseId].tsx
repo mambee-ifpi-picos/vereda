@@ -124,14 +124,19 @@ const CourseDashboard: NextPage = () => {
           <Box
             key={student.uid}
             alignItems="center"
-            p={3}
-            sx={{ display: 'flex' }}
+            sx={{
+              display: 'flex',
+              marginBottom: '8px',
+              flexDirection: { xs: 'column', md: 'row' },
+            }}
           >
-            <Box mr={3}>{student.name}</Box>
-            <Box mr={3}>
-              <Typography variant="body2" color="textSecondary">
-                {`Concluiu ${Math.round(getCourseProgress(student.uid))}%`}
-              </Typography>
+            <Box alignItems="center" sx={{ display: 'flex' }}>
+              <Box mr={3}>{student.name}</Box>
+              <Box mr={3}>
+                <Typography variant="body2" color="textSecondary">
+                  {`Concluiu ${Math.round(getCourseProgress(student.uid))}%`}
+                </Typography>
+              </Box>
             </Box>
             <Box
               sx={{
