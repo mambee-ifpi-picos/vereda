@@ -176,7 +176,9 @@ function ResponsiveAppBar() {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title={user.name || ''}>
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar>{getNameToAvatar()}</Avatar>
+                  <Avatar sx={{ color: '#fff', backgroundColor: '#313546' }}>
+                    {getNameToAvatar()}
+                  </Avatar>
                 </IconButton>
               </Tooltip>
               <Menu

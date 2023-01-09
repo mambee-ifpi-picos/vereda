@@ -12,9 +12,6 @@
 .timestamp {
     margin-bottom: 20px;
     padding: 0px 40px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     font-weight: 100;
 }
 
@@ -56,27 +53,4 @@
 
 .timeline li.complete .status h4 {
     color: #19857b;
-}
-
-@media (min-device-width: 320px) and (max-device-width: 700px) {
-    .timeline {
-        list-style-type: none;
-        /* display: block; */
-    }
-
-    .timeline li {
-        transition: all 200ms ease-in;
-        display: flex;
-        width: inherit;
-    }
-
-    .timestamp {
-        width: 100px;
-    }
-
-    .status:before {
-        left: -8%;
-        top: 30%;
-        transition: all 200ms ease-in;
-    }
 }

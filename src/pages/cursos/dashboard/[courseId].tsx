@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import type { NextPage } from 'next'
-import { Box, Container } from '@mui/material'
+import { Box, Container, Tooltip } from '@mui/material'
 import { useRouter } from 'next/router'
 import { CourseType, LearningGoalType, StudentType } from '../../../types/Types'
 import {
@@ -18,6 +18,7 @@ import { format } from 'date-fns'
 import { useAuth } from '../../../context/AuthContext'
 import { db } from '../../../config/firebase'
 import getUserNameByUid from '../../../hooks/getUserNameByUid'
+import BarChar from '../../../components/BarChart'
 
 const CourseDashboard: NextPage = () => {
   const router = useRouter()
@@ -111,6 +112,13 @@ const CourseDashboard: NextPage = () => {
           {course && format(course.endDate, 'dd/MM/yyyy')}
         </>
       </Typography>
+      <BarChar
+        qtdStudents={course?.students?.length || 0}
+        learningGoals={learningGoals}
+      />
+      <Typography align="center" marginTop={4} variant="h5">
+        Dados específico de cada aluno
+      </Typography>
       {course &&
         course.studentsUser?.map((student) => (
           <Box
@@ -121,9 +129,9 @@ const CourseDashboard: NextPage = () => {
           >
             <Box mr={3}>{student.name}</Box>
             <Box mr={3}>
-              <Typography variant="body2" color="textSecondary">{`${Math.round(
-                getCourseProgress(student.uid)
-              )}%`}</Typography>
+              <Typography variant="body2" color="textSecondary">
+                {`Concluiu ${Math.round(getCourseProgress(student.uid))}%`}
+              </Typography>
             </Box>
             <Box
               sx={{
@@ -144,10 +152,23 @@ const CourseDashboard: NextPage = () => {
                           : ''
                       }
                     >
-                      <div className={styles.timestamp}>
-                        <span className="">{learningGoal.goal}</span>
-                      </div>
-                      <div className={styles.status}></div>
+                      <Typography
+                        variant="caption"
+                        className={styles.timestamp}
+                        sx={{
+                          display: { xs: 'none', md: 'flex' },
+                          alignItems: 'center',
+                        }}
+                      >
+                        {learningGoal.goal}
+                      </Typography>
+                      <Tooltip
+                        sx={{}}
+                        title={learningGoal.goal}
+                        enterTouchDelay={0}
+                      >
+                        <div className={styles.status}></div>
+                      </Tooltip>
                     </li>
                   ))}
               </ul>
