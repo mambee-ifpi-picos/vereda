@@ -23,7 +23,7 @@ export interface BarChartProps {
 
 const BarChar = ({ qtdStudents, learningGoals }: BarChartProps) => {
   const options: ChartOptions = {
-    // responsive: true,
+    responsive: true,
     maintainAspectRatio: true,
     scales: {
       y: {
@@ -82,9 +82,11 @@ const BarChar = ({ qtdStudents, learningGoals }: BarChartProps) => {
       <Typography align="center" marginTop={4} variant="h5">
         Dados gerais
       </Typography>
-      {/* 
+      <Box sx={{ maxHeight: { xs: 'auto', md: '300px' } }}>
+        {/* 
       // @ts-ignore */}
-      <Bar height={qtdStudents < 5 ? 75 : 100} data={data} options={options} />
+        <Bar data={data} options={options} />
+      </Box>
     </Box>
   )
 }
