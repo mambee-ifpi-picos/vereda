@@ -273,17 +273,18 @@
 
 .changeColor {
   position: fixed;
-  right: -20px;
-  top: 75px;
-  width: 50px;
+  right: 16px;
+  bottom: 16px;
   cursor: pointer;
   display: flex;
   align-items: center;
   background: #313546;
   padding: 4px;
-  border-radius: 4px;
-  transition: all 0.2s cubic-bezier(0.76, 0, 0.27, 0.99);
+  border-radius: 50%;
   line-height: 0;
+  width: 32px;
+  height: 32px;
+  z-index: 991;
 }
 
 .blueIcon {
@@ -297,6 +298,7 @@
 
 @media(max-width: 599px) {
   .changeColor {
-    top: 50px;
+    right: 8px;
+    bottom: 8px;
   }
 }
