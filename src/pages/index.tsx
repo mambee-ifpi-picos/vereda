@@ -10,7 +10,7 @@ const Home: NextPage = () => {
       component="main"
       maxWidth="md"
       sx={{
-        paddingY: '2rem',
+        paddingY: '1rem',
         display: 'flex',
         alignItems: 'center',
         flexDirection: 'column',

@@ -103,7 +103,7 @@ const CourseDashboard: NextPage = () => {
 
   return (
     <Container component="main" maxWidth="lg">
-      <Typography align="center" variant="h3" component="h3">
+      <Typography align="center" variant="h4" component="h4">
         {course?.name}
       </Typography>
       <Typography align="center" variant="subtitle1">

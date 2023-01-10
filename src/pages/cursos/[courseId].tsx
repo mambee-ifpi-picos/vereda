@@ -22,6 +22,7 @@ import { useAuth } from '../../context/AuthContext'
 import { db } from '../../config/firebase'
 import ModalConfirm from '../../components/ModalConfirm'
 import { LinearProgress } from '@mui/material'
+import ColorLensIcon from '@mui/icons-material/ColorLens'
 
 const Goals: NextPage = () => {
   const ref = useRef<ModalType>()
@@ -33,6 +34,10 @@ const Goals: NextPage = () => {
 
   const [learningGoals, setLearningGoals] = useState<LearningGoalType[]>([])
   const [course, setCourse] = useState<CourseType>()
+
+  const [pinkColor, setPinkColor] = useState(
+    localStorage.getItem('pinkColor') == 'true'
+  )
 
   const subscribe = async () => {
     if (!user.uid) {
@@ -142,9 +147,14 @@ const Goals: NextPage = () => {
     return course?.students?.includes(user.uid || '') || false
   }
 
+  function changeLineColor() {
+    setPinkColor(!pinkColor)
+    localStorage.setItem('pinkColor', `${!pinkColor}`)
+  }
+
   return (
     <Container component="main" maxWidth="sm">
-      <Typography align="center" variant="h3" component="h3">
+      <Typography align="center" variant="h4" component="h4">
         {course?.name}
       </Typography>
       <Typography align="center" variant="subtitle1">
@@ -179,13 +189,26 @@ const Goals: NextPage = () => {
         </Box>
       </Box>
 
+      <Box className={styles.changeColor}>
+        <Box
+          onClick={() => changeLineColor()}
+          className={`${pinkColor ? styles.blueIcon : styles.pinkIcon}`}
+        >
+          <ColorLensIcon />
+        </Box>
+      </Box>
+
       <div className={styles.timeline}>
         {learningGoals &&
           learningGoals.map((learningGoal) => (
             <div
               key={learningGoal.id}
               className={`${styles.card} ${
-                isCompleted(learningGoal) ? styles.completed : ''
+                isCompleted(learningGoal)
+                  ? styles.completed
+                  : pinkColor
+                  ? styles.pink
+                  : ''
               }`}
             >
               <div className={styles.info}>

@@ -85,7 +85,7 @@
   color: #ECEDF2;
   border-radius: 10px;
   padding: 10px;
-  z-index: 999;
+  z-index: 99;
   position: relative;
 }
 
@@ -124,6 +124,16 @@
 .completed .title::before {
   background: #19857b;
   border-color: #19857b;
+}
+
+
+.pink::before {
+  border-color: #ea64df;
+}
+
+.pink .title::before {
+  background: #ea64df;
+  border-color: #ea64df;
 }
 
 .card .checked h3,
@@ -258,5 +268,35 @@
     border: 0;
     opacity: 1;
     border: 5px solid rgba(0, 0, 0, 0.1);
+  }
+}
+
+.changeColor {
+  position: fixed;
+  right: -20px;
+  top: 75px;
+  width: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background: #313546;
+  padding: 4px;
+  border-radius: 4px;
+  transition: all 0.2s cubic-bezier(0.76, 0, 0.27, 0.99);
+  line-height: 0;
+}
+
+.blueIcon {
+  color: #3a97d4;
+
+}
+
+.pinkIcon {
+  color: #ea64df;
+}
+
+@media(max-width: 599px) {
+  .changeColor {
+    top: 50px;
   }
 }
