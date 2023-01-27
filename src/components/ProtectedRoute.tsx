@@ -1,19 +1,21 @@
+import { onAuthStateChanged, User } from 'firebase/auth'
 import { useRouter } from 'next/router'
-import React, { useEffect } from 'react'
-import { useAuth } from '../context/AuthContext'
+import React, { useEffect, useState } from 'react'
+import { auth } from '../config/firebase'
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter()
-
-  const { user } = useAuth()
-
-  console.log('router & user', router, user)
-
+  const [user, setUser] = useState<User | null>()
   useEffect(() => {
-    if (!user.uid) {
-      router.push('/login')
-    }
-  }, [router, user])
+    const unsubscribe = onAuthStateChanged(auth, (authUser) => {
+      if (!authUser?.uid) {
+        router.push('/login')
+      }
+      setUser(authUser)
+    })
+
+    return () => unsubscribe()
+  }, [user, router])
 
   return <div>{user ? children : null}</div>
 }
