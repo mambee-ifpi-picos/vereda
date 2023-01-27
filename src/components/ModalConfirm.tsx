@@ -37,18 +37,21 @@ const ModalConfirm = forwardRef(
           aria-labelledby="alert-dialog-title"
           aria-describedby="alert-dialog-description"
         >
-          <DialogTitle id="alert-dialog-title">{title}</DialogTitle>
+          <DialogTitle id="alert-dialog-title">
+            {' '}
+            Você já atingiu o objetivo de aprendizagem abaixo?
+          </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              Você já completou o objetivo acima?
+              {title}
             </DialogContentText>
           </DialogContent>
           <DialogActions>
             <Button variant="contained" color="error" onClick={handleClose}>
-              Cancelar
+              Não, Cancelar
             </Button>
             <Button variant="contained" onClick={confirmAction} autoFocus>
-              Confirmar
+              Sim, Confirmar
             </Button>
           </DialogActions>
         </Dialog>

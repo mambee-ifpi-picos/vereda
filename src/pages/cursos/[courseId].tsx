@@ -215,16 +215,16 @@ const Goals: NextPage = () => {
                 <div className={styles.title}>
                   <h3>{learningGoal.goal}</h3>
                   <label className={styles.label}>
-                    <input
-                      disabled={!isSubscribed()}
-                      defaultChecked={isCompleted(learningGoal)}
-                      className={styles.label__checkbox}
-                      type="checkbox"
-                    />
                     <span className={styles.label__text}>
-                      <span className={styles.label__check}>
+                      <span
+                        className={
+                          isCompleted(learningGoal)
+                            ? styles.label__checked
+                            : styles.label__check
+                        }
+                      >
                         <ModalConfirm
-                          disable={!isSubscribed()}
+                          disable={!isSubscribed() || isCompleted(learningGoal)}
                           ref={ref}
                           icon={
                             <CheckIcon

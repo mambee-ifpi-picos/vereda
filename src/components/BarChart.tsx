@@ -26,7 +26,17 @@ const BarChar = ({ qtdStudents, learningGoals }: BarChartProps) => {
     responsive: true,
     maintainAspectRatio: true,
     scales: {
+      x: {
+        title: {
+          text: 'Objetivos',
+          display: true,
+        },
+      },
       y: {
+        title: {
+          text: 'Qtd de alunos',
+          display: true,
+        },
         min: 0,
         max: qtdStudents,
         ticks: {
@@ -43,11 +53,21 @@ const BarChar = ({ qtdStudents, learningGoals }: BarChartProps) => {
         display: true,
         text: 'Total de alunos que concluiram cada objetivo deste curso',
       },
+      tooltip: {
+        callbacks: {
+          label: function (context) {
+            const value = parseInt(context.formattedValue)
+            return `${learningGoals[context.dataIndex].goal}: ${
+              context.formattedValue
+            } ${value > 1 ? ' alunos concluiram' : 'aluno concluiu'} `
+          },
+        },
+      },
     },
   }
 
   const data = {
-    labels: learningGoals.map((item) => item.goal),
+    labels: learningGoals.map((item) => item.sequence),
     datasets: [
       {
         label: 'Alunos que concluiram este objetivo',
