@@ -28,8 +28,8 @@ img {
   max-height: 100%;
 }
 
-fieldset{
-
+.font-mulish {
+  font-family: Mulish;
 }
 
 @media (prefers-color-scheme: dark) {

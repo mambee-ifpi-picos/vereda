@@ -207,7 +207,7 @@ const Goals: NextPage = () => {
             >
               <div className={styles.info}>
                 <div className={styles.title}>
-                  <h4>{learningGoal.goal}</h4>
+                  <h4 className="">{learningGoal.goal}</h4>
                   <label className={styles.label}>
                     <span className={styles.label__text}>
                       <span
@@ -241,7 +241,6 @@ const Goals: NextPage = () => {
                 <p>
                   <b>Conteúdo</b>: {learningGoal.content}
                 </p>
-
                 <p>
                   <b>Indicador de sucesso</b>: {learningGoal.successIndicator}{' '}
                 </p>
