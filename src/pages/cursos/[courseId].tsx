@@ -153,7 +153,7 @@ const Goals: NextPage = () => {
   }
 
   return (
-    <Container component="main" maxWidth="xs" style={{ padding: '0 24px' }}>
+    <Container component="main" maxWidth="xs">
       <Typography align="center" variant="h4" component="h4">
         {course?.name}
       </Typography>

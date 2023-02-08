@@ -252,4 +252,8 @@
     right: 8px;
     bottom: 8px;
   }
+
+  .timeline {
+    margin: 0 48px;
+  }
 }
