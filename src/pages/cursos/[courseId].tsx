@@ -153,7 +153,7 @@ const Goals: NextPage = () => {
   }
 
   return (
-    <Container component="main" maxWidth="sm">
+    <Container component="main" maxWidth="xs">
       <Typography align="center" variant="h4" component="h4">
         {course?.name}
       </Typography>
@@ -173,10 +173,9 @@ const Goals: NextPage = () => {
       >
         {isSubscribed() ? 'Inscrito' : 'Inscrever - se'}
       </Button>
-
       <Box
         alignItems="center"
-        p={3}
+        p={1}
         sx={{ display: isSubscribed() ? 'flex' : 'none' }}
       >
         <Box width="100%" mr={3}>
@@ -189,14 +188,9 @@ const Goals: NextPage = () => {
         </Box>
       </Box>
 
-      <Box className={styles.changeColor}>
-        <Box
-          onClick={() => changeLineColor()}
-          className={`${pinkColor ? styles.blueIcon : styles.pinkIcon}`}
-        >
-          <ColorLensIcon />
-        </Box>
-      </Box>
+      <Typography align="center" variant="subtitle1">
+        Objetivos de aprendizagem
+      </Typography>
 
       <div className={styles.timeline}>
         {learningGoals &&
@@ -213,7 +207,7 @@ const Goals: NextPage = () => {
             >
               <div className={styles.info}>
                 <div className={styles.title}>
-                  <h3>{learningGoal.goal}</h3>
+                  <h4>{learningGoal.goal}</h4>
                   <label className={styles.label}>
                     <span className={styles.label__text}>
                       <span
@@ -245,8 +239,7 @@ const Goals: NextPage = () => {
                   </label>
                 </div>
                 <p>
-                  <b>Conteúdo</b>: <br />
-                  {learningGoal.content}
+                  <b>Conteúdo</b>: {learningGoal.content}
                 </p>
 
                 <p>
@@ -256,6 +249,14 @@ const Goals: NextPage = () => {
             </div>
           ))}
       </div>
+      <Box className={styles.changeColor}>
+        <Box
+          onClick={() => changeLineColor()}
+          className={`${pinkColor ? styles.blueIcon : styles.pinkIcon}`}
+        >
+          <ColorLensIcon />
+        </Box>
+      </Box>
     </Container>
   )
 }

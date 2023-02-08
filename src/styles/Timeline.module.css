@@ -17,7 +17,7 @@
 /* Card container */
 .card {
   position: relative;
-  max-width: 600px;
+  max-width: 444px;
   counter-increment: section;
 }
 
@@ -89,6 +89,10 @@
   position: relative;
 }
 
+.info p {
+  margin: 0;
+}
+
 .info ul {
   margin: 0.3rem 1rem;
 }
@@ -97,9 +101,6 @@
 .title {
   color: #ECEDF2;
   position: relative;
-  margin-bottom: 0.5rem;
-  padding-bottom: 0.5rem;
-  border-bottom: 1px dashed #ECEDF2;
   display: flex;
   justify-content: space-between;
   gap: 1rem;
