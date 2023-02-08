@@ -21,6 +21,7 @@ import { CourseType, LearningGoalType } from '../../types/Types'
 import { collection, addDoc } from 'firebase/firestore'
 import { db } from '../../config/firebase'
 
+const MAX_LENGTH = 2
 const FormPage = () => {
   const { user } = useAuth()
   const router = useRouter()
@@ -85,10 +86,13 @@ const FormPage = () => {
   }
 
   const validateRequiredFields = (courseValidate: CourseType): boolean => {
-    if (!courseValidate.name || courseValidate.name.length < 2) {
+    if (!courseValidate.name || courseValidate.name.length < MAX_LENGTH) {
       return false
     }
-    if (!courseValidate.description || courseValidate.description.length < 10) {
+    if (
+      !courseValidate.description ||
+      courseValidate.description.length < MAX_LENGTH
+    ) {
       return false
     }
     if (
@@ -104,13 +108,13 @@ const FormPage = () => {
       return false
     }
     courseValidate.learningGoals?.forEach((item) => {
-      if (!item.goal || item.goal.length < 10) {
+      if (!item.goal || item.goal.length < MAX_LENGTH) {
         return false
       }
-      if (!item.content || item.content.length < 10) {
+      if (!item.content || item.content.length < MAX_LENGTH) {
         return false
       }
-      if (!item.successIndicator || item.successIndicator.length < 10) {
+      if (!item.successIndicator || item.successIndicator.length < MAX_LENGTH) {
         return false
       }
     })
@@ -151,7 +155,7 @@ const FormPage = () => {
             sx={{ m: 1 }}
             id="name"
             label="Nome"
-            error={!name || name.length < 2}
+            error={!name || name.length < MAX_LENGTH}
             variant="outlined"
             value={name}
             onChange={(e) => setName(e.target.value)}
@@ -162,7 +166,7 @@ const FormPage = () => {
             sx={{ m: 1 }}
             id="description"
             label="Descrição do curso"
-            error={!name || name.length < 15}
+            error={!description || description.length < MAX_LENGTH}
             multiline
             rows={3}
             value={description}

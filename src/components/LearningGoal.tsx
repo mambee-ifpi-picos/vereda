@@ -1,8 +1,25 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import TextField from '@mui/material/TextField'
 import Box from '@mui/material/Box'
-import { LearningGoalProp } from '../types/Types'
+import { LearningGoalProp, LearningGoalType } from '../types/Types'
+import { useState } from 'react'
 
+const MAX_LENGTH = 2
 function LearningGoal({ onChangeValue, learningGoal }: LearningGoalProp) {
+  const [goal, setGoal] = useState('')
+  const [content, setContent] = useState('')
+  const [successIndicator, setSuccessIndicator] = useState('')
+
+  // foi criado essa função somente para atualizar o estado de validação dos inputs
+  const handleChange = (event: any) => {
+    const field: string = event.target.id.split('-')[0]
+    learningGoal[field as keyof LearningGoalType] = event.target.value
+    setGoal(learningGoal.goal || '')
+    setContent(learningGoal.content || '')
+    setSuccessIndicator(learningGoal.successIndicator || '')
+    onChangeValue(event)
+  }
+
   return (
     <Box
       component="fieldset"
@@ -34,9 +51,9 @@ function LearningGoal({ onChangeValue, learningGoal }: LearningGoalProp) {
         id={`goal-${learningGoal.sequence}`}
         label="Objetivo"
         variant="outlined"
-        error={!learningGoal.goal || learningGoal.goal.length < 10}
+        error={!goal || goal.length < MAX_LENGTH}
         value={learningGoal.goal}
-        onChange={onChangeValue}
+        onChange={handleChange}
       />
       <TextField
         fullWidth
@@ -44,10 +61,10 @@ function LearningGoal({ onChangeValue, learningGoal }: LearningGoalProp) {
         id={`content-${learningGoal.sequence}-content`}
         label="Conteúdo"
         multiline
-        error={!learningGoal.content || learningGoal.content.length < 10}
+        error={!content || content.length < MAX_LENGTH}
         rows={2}
         value={learningGoal.content}
-        onChange={onChangeValue}
+        onChange={handleChange}
       />
       <TextField
         fullWidth
@@ -55,12 +72,9 @@ function LearningGoal({ onChangeValue, learningGoal }: LearningGoalProp) {
         id={`successIndicator-${learningGoal.sequence}`}
         label="Indicador de Sucesso"
         variant="outlined"
-        error={
-          !learningGoal.successIndicator ||
-          learningGoal.successIndicator.length < 10
-        }
+        error={!successIndicator || successIndicator.length < MAX_LENGTH}
         value={learningGoal.successIndicator}
-        onChange={onChangeValue}
+        onChange={handleChange}
       />
     </Box>
   )
