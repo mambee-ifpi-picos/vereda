@@ -157,7 +157,7 @@ const CourseDashboard: NextPage = () => {
                           : ''
                       }
                     >
-                      <Typography
+                      {/* <Typography
                         variant="caption"
                         className={styles.timestamp}
                         sx={{
@@ -166,7 +166,7 @@ const CourseDashboard: NextPage = () => {
                         }}
                       >
                         {learningGoal.goal}
-                      </Typography>
+                      </Typography> */}
                       <Tooltip
                         sx={{}}
                         title={learningGoal.goal}
