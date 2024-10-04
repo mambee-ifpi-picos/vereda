@@ -27,12 +27,12 @@ const Home: NextPage = () => {
           rowGap: '2rem',
         }}
       >
-        <Image src="/static/logo.png" width={250} height={250} alt="logo" />
+        <Image src="/static/logo-512.png" width={250} height={250} alt="logo" />
         <Typography align="center" variant="h2" component="h2">
           Vereda
         </Typography>
         <Typography align="center" variant="h6">
-          Aplicativo para acompanhamento de seu aprendizado!
+          Aplicativo para acompanhamento de objetivos de aprendizagem
         </Typography>
       </Box>
     </Container>

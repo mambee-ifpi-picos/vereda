@@ -121,7 +121,7 @@ const CoursesList = ({ userType }: CourseUserTypeProp) => {
                 <Link
                   color="#66bb6a"
                   underline="hover"
-                  href={`/cursos/dashboard/${course.id}`}
+                  href={`/cursos/meu-espaco/${course.id}`}
                 >
                   <AnalyticsIcon />
                 </Link>

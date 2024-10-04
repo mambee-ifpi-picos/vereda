@@ -20,6 +20,7 @@ import { CourseType, LearningGoalType } from '../../types/Types'
 
 import { collection, addDoc } from 'firebase/firestore'
 import { db } from '../../config/firebase'
+import Head from 'next/head'
 
 const MAX_LENGTH = 2
 const FormPage = () => {
@@ -122,154 +123,159 @@ const FormPage = () => {
   }
 
   return (
-    <ProtectedRoute>
-      <Container
-        component="main"
-        maxWidth="md"
-        sx={{
-          paddingY: '2rem',
-          display: 'flex',
-          alignItems: 'center',
-          flexDirection: 'column',
-          justifyContent: 'center',
-        }}
-      >
-        <Typography
-          color="secondary"
-          align="center"
-          variant="h3"
-          component="h3"
-        >
-          Cadastro de curso
-        </Typography>
-        <Box
-          component="form"
-          onSubmit={onSubmit}
+    <>
+      <Head>
+        <title>Vereda - Cadastro de Curso</title>
+      </Head>
+      <ProtectedRoute>
+        <Container
+          component="main"
+          maxWidth="md"
           sx={{
-            marginTop: 2,
-            width: '100%',
+            paddingY: '2rem',
+            display: 'flex',
+            alignItems: 'center',
+            flexDirection: 'column',
+            justifyContent: 'center',
           }}
         >
-          <TextField
-            fullWidth
-            sx={{ m: 1 }}
-            id="name"
-            label="Nome"
-            error={!name || name.length < MAX_LENGTH}
-            variant="outlined"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          />
-
-          <TextField
-            fullWidth
-            sx={{ m: 1 }}
-            id="description"
-            label="Descrição do curso"
-            error={!description || description.length < MAX_LENGTH}
-            multiline
-            rows={3}
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-          />
-
-          <FormGroup
-            sx={{
-              width: '100%',
-              margin: '8px',
-              display: 'flex',
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}
-          >
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
-                renderInput={(props) => (
-                  <TextField
-                    {...props}
-                    error={
-                      startDate == null ||
-                      (endDate ? endDate < startDate : false)
-                    }
-                  />
-                )}
-                inputFormat="DD/MM/YYYY"
-                label="Data inicial"
-                value={startDate}
-                minDate={dayjs()}
-                onChange={(newValue) => {
-                  setStartDate(newValue)
-                }}
-              />
-              <DatePicker
-                inputFormat="DD/MM/YYYY"
-                label="Data final"
-                value={endDate}
-                renderInput={(props) => (
-                  <TextField
-                    {...props}
-                    error={
-                      endDate == null ||
-                      (startDate ? endDate < startDate : false)
-                    }
-                  />
-                )}
-                minDate={startDate}
-                onChange={(newValue) => {
-                  setEndDate(newValue)
-                }}
-              />
-            </LocalizationProvider>
-          </FormGroup>
           <Typography
             color="secondary"
-            marginTop="16px"
             align="center"
-            variant="h5"
-            component="p"
+            variant="h3"
+            component="h3"
           >
-            Objetivos de aprendizagem
+            Cadastro de curso
           </Typography>
-
-          {learningGoalsEl.map((item) => (
-            <Box key={item.props.sequence}>{item}</Box>
-          ))}
-
-          <Button
-            type="button"
-            variant="outlined"
-            sx={{ display: 'flex', alignItems: 'center' }}
-            onClick={() => {
-              const newLearningGoal: LearningGoalType = {
-                sequence: learningGoals.length + 1,
-              }
-              learningGoals.push(newLearningGoal)
-              // eslint-disable-next-line react/jsx-key
-              setLearningGoals(learningGoals)
-              setLearningGoalsEl([
-                ...learningGoalsEl,
-                <LearningGoal
-                  key={newLearningGoal.sequence}
-                  onChangeValue={handleChangeValue}
-                  learningGoal={newLearningGoal}
-                />,
-              ])
+          <Box
+            component="form"
+            onSubmit={onSubmit}
+            sx={{
+              marginTop: 2,
+              width: '100%',
             }}
           >
-            <AddIcon />
-            Mais um objetivo
-          </Button>
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-          >
-            Salvar
-          </Button>
-        </Box>
-      </Container>
-    </ProtectedRoute>
+            <TextField
+              fullWidth
+              sx={{ m: 1 }}
+              id="name"
+              label="Nome"
+              error={!name || name.length < MAX_LENGTH}
+              variant="outlined"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+
+            <TextField
+              fullWidth
+              sx={{ m: 1 }}
+              id="description"
+              label="Descrição do curso"
+              error={!description || description.length < MAX_LENGTH}
+              multiline
+              rows={3}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
+
+            <FormGroup
+              sx={{
+                width: '100%',
+                margin: '8px',
+                display: 'flex',
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+              }}
+            >
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  renderInput={(props) => (
+                    <TextField
+                      {...props}
+                      error={
+                        startDate == null ||
+                        (endDate ? endDate < startDate : false)
+                      }
+                    />
+                  )}
+                  inputFormat="DD/MM/YYYY"
+                  label="Data inicial"
+                  value={startDate}
+                  minDate={dayjs()}
+                  onChange={(newValue) => {
+                    setStartDate(newValue)
+                  }}
+                />
+                <DatePicker
+                  inputFormat="DD/MM/YYYY"
+                  label="Data final"
+                  value={endDate}
+                  renderInput={(props) => (
+                    <TextField
+                      {...props}
+                      error={
+                        endDate == null ||
+                        (startDate ? endDate < startDate : false)
+                      }
+                    />
+                  )}
+                  minDate={startDate}
+                  onChange={(newValue) => {
+                    setEndDate(newValue)
+                  }}
+                />
+              </LocalizationProvider>
+            </FormGroup>
+            <Typography
+              color="secondary"
+              marginTop="16px"
+              align="center"
+              variant="h5"
+              component="p"
+            >
+              Objetivos de aprendizagem
+            </Typography>
+
+            {learningGoalsEl.map((item) => (
+              <Box key={item.props.sequence}>{item}</Box>
+            ))}
+
+            <Button
+              type="button"
+              variant="outlined"
+              sx={{ display: 'flex', alignItems: 'center' }}
+              onClick={() => {
+                const newLearningGoal: LearningGoalType = {
+                  sequence: learningGoals.length + 1,
+                }
+                learningGoals.push(newLearningGoal)
+                // eslint-disable-next-line react/jsx-key
+                setLearningGoals(learningGoals)
+                setLearningGoalsEl([
+                  ...learningGoalsEl,
+                  <LearningGoal
+                    key={newLearningGoal.sequence}
+                    onChangeValue={handleChangeValue}
+                    learningGoal={newLearningGoal}
+                  />,
+                ])
+              }}
+            >
+              <AddIcon />
+              Mais um objetivo
+            </Button>
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+            >
+              Salvar
+            </Button>
+          </Box>
+        </Container>
+      </ProtectedRoute>
+    </>
   )
 }
 

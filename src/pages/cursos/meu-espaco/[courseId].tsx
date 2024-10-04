@@ -19,6 +19,7 @@ import { useAuth } from '../../../context/AuthContext'
 import { db } from '../../../config/firebase'
 import getUserNameByUid from '../../../hooks/getUserNameByUid'
 import BarChar from '../../../components/BarChart'
+import Head from 'next/head'
 
 const CourseDashboard: NextPage = () => {
   const router = useRouter()
@@ -40,7 +41,7 @@ const CourseDashboard: NextPage = () => {
         user.uid &&
         docSnap.data().ownerUser != user.uid
       ) {
-        router.push('/cursos/dashboard')
+        router.push('/cursos/meu-espaco')
       }
       const courseLoaded: CourseType = {
         name: docSnap.data().name,
@@ -102,62 +103,66 @@ const CourseDashboard: NextPage = () => {
   }
 
   return (
-    <Container component="main" maxWidth="lg">
-      <Typography align="center" variant="h4" component="h4">
-        {course?.name}
-      </Typography>
-      <Typography align="center" variant="subtitle1">
-        <>
-          {'de'} {course && format(course.startDate, 'dd/MM/yyyy')} {' até '}
-          {course && format(course.endDate, 'dd/MM/yyyy')}
-        </>
-      </Typography>
-      <BarChar
-        qtdStudents={course?.students?.length || 0}
-        learningGoals={learningGoals}
-      />
-      <Typography align="center" marginTop={4} variant="h5">
-        Dados específico de cada aluno
-      </Typography>
-      {course &&
-        course.studentsUser?.map((student) => (
-          <Box
-            key={student.uid}
-            alignItems="center"
-            sx={{
-              display: 'flex',
-              marginBottom: '8px',
-              flexDirection: { xs: 'column', md: 'row' },
-            }}
-          >
-            <Box alignItems="center" sx={{ display: 'flex' }}>
-              <Box mr={3}>{student.name}</Box>
-              <Box mr={3}>
-                <Typography variant="body2" color="textSecondary">
-                  {`Concluiu ${Math.round(getCourseProgress(student.uid))}%`}
-                </Typography>
-              </Box>
-            </Box>
+    <>
+      <Head>
+        <title>Vereda - Indicadores do curso {course?.name}</title>
+      </Head>
+      <Container component="main" maxWidth="lg">
+        <Typography align="center" variant="h4" component="h4">
+          {course?.name}
+        </Typography>
+        <Typography align="center" variant="subtitle1">
+          <>
+            {'de'} {course && format(course.startDate, 'dd/MM/yyyy')} {' até '}
+            {course && format(course.endDate, 'dd/MM/yyyy')}
+          </>
+        </Typography>
+        <BarChar
+          qtdStudents={course?.students?.length || 0}
+          learningGoals={learningGoals}
+        />
+        <Typography align="center" marginTop={4} variant="h5">
+          Dados específico de cada aluno
+        </Typography>
+        {course &&
+          course.studentsUser?.map((student) => (
             <Box
+              key={student.uid}
+              alignItems="center"
               sx={{
-                overflowX: 'auto',
-                overflowY: 'hidden',
-                whiteSpace: 'nowrap',
-                width: '100%',
+                display: 'flex',
+                marginBottom: '8px',
+                flexDirection: { xs: 'column', md: 'row' },
               }}
             >
-              <ul className={styles.timeline}>
-                {learningGoals &&
-                  learningGoals.map((learningGoal) => (
-                    <li
-                      key={learningGoal.id}
-                      className={
-                        learningGoal.studentsCompleted?.includes(student.uid)
-                          ? styles.complete
-                          : ''
-                      }
-                    >
-                      {/* <Typography
+              <Box alignItems="center" sx={{ display: 'flex' }}>
+                <Box mr={3}>{student.name}</Box>
+                <Box mr={3}>
+                  <Typography variant="body2" color="textSecondary">
+                    {`Concluiu ${Math.round(getCourseProgress(student.uid))}%`}
+                  </Typography>
+                </Box>
+              </Box>
+              <Box
+                sx={{
+                  overflowX: 'auto',
+                  overflowY: 'hidden',
+                  whiteSpace: 'nowrap',
+                  width: '100%',
+                }}
+              >
+                <ul className={styles.timeline}>
+                  {learningGoals &&
+                    learningGoals.map((learningGoal) => (
+                      <li
+                        key={learningGoal.id}
+                        className={
+                          learningGoal.studentsCompleted?.includes(student.uid)
+                            ? styles.complete
+                            : ''
+                        }
+                      >
+                        {/* <Typography
                         variant="caption"
                         className={styles.timestamp}
                         sx={{
@@ -167,21 +172,21 @@ const CourseDashboard: NextPage = () => {
                       >
                         {learningGoal.goal}
                       </Typography> */}
-                      <Tooltip
-                        sx={{}}
-                        title={learningGoal.goal}
-                        enterTouchDelay={0}
-                      >
-                        <div className={styles.status}></div>
-                      </Tooltip>
-                    </li>
-                  ))}
-              </ul>
+                        <Tooltip
+                          sx={{}}
+                          title={learningGoal.goal}
+                          enterTouchDelay={0}
+                        >
+                          <div className={styles.status}></div>
+                        </Tooltip>
+                      </li>
+                    ))}
+                </ul>
+              </Box>
             </Box>
-          </Box>
-        ))}
+          ))}
 
-      {/* <Box alignItems="center" p={3}>
+        {/* <Box alignItems="center" p={3}>
         <Box width="100%" mr={3}>
           <LinearProgress variant="determinate" value={getCourseProgress()} />
         </Box>
@@ -191,7 +196,8 @@ const CourseDashboard: NextPage = () => {
           )}%`}</Typography>
         </Box>
       </Box> */}
-    </Container>
+      </Container>
+    </>
   )
 }
 

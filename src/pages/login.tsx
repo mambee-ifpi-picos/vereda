@@ -12,6 +12,7 @@ import { Container } from '@mui/material'
 
 import GoogleIcon from '@mui/icons-material/Google'
 import Image from 'next/image'
+import Head from 'next/head'
 
 const Login = () => {
   const [email, setEmail] = useState('')
@@ -22,7 +23,7 @@ const Login = () => {
     e.preventDefault()
     try {
       await login(email, password)
-      router.push('/cursos/dashboard')
+      router.push('/cursos/meu-espaco')
     } catch (error) {
       console.log(error)
     }
@@ -31,86 +32,90 @@ const Login = () => {
   const googleLogin = async () => {
     try {
       await loginWithGoogle()
-      router.push('/cursos/dashboard')
+      router.push('/cursos/meu-espaco')
     } catch (error) {
       console.log(error)
     }
   }
 
   return (
-    <Container component="main" maxWidth="xs">
-      <Box
-        sx={{
-          marginTop: 8,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-        }}
-      >
-        <Image src="/static/logo.png" width={150} height={150} alt="logo" />
-        <Typography component="h1" variant="h5">
-          Vereda
-        </Typography>
+    <>
+      <Head>
+        <title>Vereda - Login</title>
+      </Head>
+      <Container component="main" maxWidth="xs">
+        <Box
+          sx={{
+            marginTop: 8,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+          }}
+        >
+          <Image src="/static/logo.png" width={150} height={150} alt="logo" />
+          <Typography component="h1" variant="h5">
+            Vereda
+          </Typography>
 
-        <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-          <LockOutlinedIcon />
-        </Avatar>
+          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+            <LockOutlinedIcon />
+          </Avatar>
 
-        <Box component="form" onSubmit={onSubmit} noValidate sx={{ mt: 1 }}>
-          <Button
-            type="button"
-            onClick={() => googleLogin()}
-            fullWidth
-            variant="contained"
-            color="secondary"
-            sx={{
-              mt: 3,
-              mb: 2,
-              display: 'flex',
-              justifyContent: 'center',
-              columnGap: '1rem',
-            }}
-          >
-            <GoogleIcon /> Login com Google
-          </Button>
-          <Box display={'none'}>
-            <Typography component="p" align="center">
-              OU
-            </Typography>
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email"
-              name="email"
-              autoComplete="email"
-              autoFocus
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Senha"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
+          <Box component="form" onSubmit={onSubmit} noValidate sx={{ mt: 1 }}>
             <Button
-              type="submit"
+              type="button"
+              onClick={() => googleLogin()}
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2 }}
+              color="secondary"
+              sx={{
+                mt: 3,
+                mb: 2,
+                display: 'flex',
+                justifyContent: 'center',
+                columnGap: '1rem',
+              }}
             >
-              Entrar
+              <GoogleIcon /> Login com Google
             </Button>
-          </Box>
-          {/* <Grid container>
+            <Box display={'none'}>
+              <Typography component="p" align="center">
+                OU
+              </Typography>
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                id="email"
+                label="Email"
+                name="email"
+                autoComplete="email"
+                autoFocus
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                name="password"
+                label="Senha"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <Button
+                type="submit"
+                fullWidth
+                variant="contained"
+                sx={{ mt: 3, mb: 2 }}
+              >
+                Entrar
+              </Button>
+            </Box>
+            {/* <Grid container>
             <Grid item xs>
               <Link href="#" variant="body2">
                 Esqueceu senha?
@@ -122,9 +127,10 @@ const Login = () => {
               </Link>
             </Grid>
           </Grid> */}
+          </Box>
         </Box>
-      </Box>
-    </Container>
+      </Container>
+    </>
   )
 }
 

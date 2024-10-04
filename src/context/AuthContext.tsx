@@ -20,6 +20,7 @@ interface UserType {
   email: string | null
   uid: string | null
   name: string | null
+  photoURL: string | null
 }
 
 interface AuthContextType {
@@ -38,6 +39,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     email: null,
     uid: null,
     name: null,
+    photoURL: null,
   })
   const [loading, setLoading] = useState(true)
 
@@ -49,10 +51,11 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
           email: user.email,
           uid: user.uid,
           name: user.displayName,
+          photoURL: user.photoURL,
         })
         saveUser(user)
       } else {
-        setUser({ email: null, uid: null, name: null })
+        setUser({ email: null, uid: null, name: null, photoURL: null })
       }
     })
     setLoading(false)
@@ -69,20 +72,23 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   }
 
   const logOut = async () => {
-    setUser({ email: null, uid: null, name: null })
+    setUser({ email: null, uid: null, name: null, photoURL: null })
     await signOut(auth)
   }
 
   const saveUser = async (user: User) => {
     try {
+      console.log('User', user)
       await updateDoc(doc(db, `users/${user.uid}`), {
         name: user.displayName,
         provider: user.providerId,
+        photoURL: user.photoURL,
       })
     } catch {
       await setDoc(doc(db, `users/${user.uid}`), {
         name: user.displayName,
         provider: user.providerId,
+        photoURL: user.photoURL,
       })
     }
   }

@@ -37,7 +37,7 @@ const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
 
 const pages: PageType[] = [
   { title: 'cursos', link: '/cursos' },
-  { title: 'dashboard', link: '/cursos/dashboard', protected: true },
+  { title: 'meu espaço', link: '/cursos/meu-espaco', protected: true },
 ]
 // const settings = ['Profile', 'Account', 'Dashboard', 'Logout']
 
@@ -65,16 +65,6 @@ function ResponsiveAppBar() {
   const handleNavigation = (page: string) => {
     router.push(page)
     handleCloseNavMenu()
-  }
-
-  const getNameToAvatar = () => {
-    const names = user.name ? user.name.split(' ') : []
-    if (names.length == 0) return ''
-    if (names.length > 1) {
-      return names[0].charAt(0) + names[1].charAt(0)
-    } else {
-      return names[0].charAt(0)
-    }
   }
 
   return (
@@ -192,7 +182,7 @@ function ResponsiveAppBar() {
 
           {user.uid ? (
             <Box sx={{ flexGrow: 0, ml: 2 }}>
-              <LightTooltip title={user.name || ''}>
+              <LightTooltip title={`${user.name}`}>
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                   <Avatar
                     sx={{
@@ -201,7 +191,12 @@ function ResponsiveAppBar() {
                       border: '1px solid #ccc',
                     }}
                   >
-                    {getNameToAvatar()}
+                    <Image
+                      src={user.photoURL || '/static/avatar.png'}
+                      width={38}
+                      height={38}
+                      alt="avatar"
+                    />
                   </Avatar>
                 </IconButton>
               </LightTooltip>

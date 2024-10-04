@@ -10,8 +10,16 @@ const withPWA = require('next-pwa')({
 
 module.exports = withPWA({
   // next.js config
-  reactStrictMode: false,
+  reactStrictMode: true,
   env: {
     FIREBASE_API_KEY: process.env.API_KEY,
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '*.googleusercontent.com',
+      },
+    ],
   },
 })

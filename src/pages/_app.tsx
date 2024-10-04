@@ -23,10 +23,15 @@ function MyApp(props: MyAppProps) {
     <AuthContextProvider>
       <CacheProvider value={emotionCache}>
         <Head>
+          <title>Vereda</title>
           <meta name="viewport" content="initial-scale=1, width=device-width" />
           <link rel="manifest" href="/manifest.json" />
           <link rel="apple-touch-icon" href="/apple-touch-icon.png"></link>
           <meta name="theme-color" content="#1a202c" />
+          <meta
+            name="description"
+            content="Aplicativo para acompanhamento de objetivos de aprendizagem"
+          />
           <link rel="icon" href="/favicon.ico"></link>
           <title>Vereda - App para acompanhamento de seu aprendizado</title>
         </Head>
