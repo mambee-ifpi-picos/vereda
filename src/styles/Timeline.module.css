@@ -14,6 +14,10 @@
   padding: 5px 10px;
 }
 
+.timeline b {
+  color: #3a97d4;
+}
+
 /* Card container */
 .card {
   position: relative;
@@ -21,20 +25,17 @@
   counter-increment: section;
 }
 
-.completed {}
-
-/* setting padding based on even or odd */
-.card:nth-child(odd) {
-  padding: 30px 0 30px 0;
+.completed {
 }
 
-.card:nth-child(even) {
+/* setting padding based on even or odd */
+.card {
   padding: 30px 0 30px 0;
 }
 
 /* Global ::before */
 .card::before {
-  content: "";
+  content: '';
   position: absolute;
   width: 50%;
   border: solid #3a97d4;
@@ -44,8 +45,8 @@
 /* Setting the border of top, bottom, left */
 .card:nth-child(odd)::before {
   left: -24px;
-  top: -4.5px;
-  bottom: -4.5px;
+  top: -5px;
+  bottom: 0;
   border-width: 5px 0 5px 5px;
   border-radius: 50px 0 0 50px;
   width: calc(50% + 24px);
@@ -54,7 +55,7 @@
 /* Setting the border of top, bottom, right */
 .card:nth-child(even)::before {
   right: -24px;
-  top: 0;
+  top: -5px;
   bottom: 0;
   border-width: 5px 5px 5px 0;
   border-radius: 0 50px 50px 0;
@@ -84,7 +85,7 @@
   display: flex;
   flex-direction: column;
   background: #313546;
-  color: #ECEDF2;
+  color: #ecedf2;
   border-radius: 10px;
   padding: 10px;
   z-index: 99;
@@ -110,7 +111,7 @@
 
 /* Title of the card */
 .title {
-  color: #ECEDF2;
+  color: #ecedf2;
   position: relative;
   display: flex;
   justify-content: space-between;
@@ -122,12 +123,11 @@
   position: absolute;
   width: 40px;
   height: 40px;
-  color: #FFF;
+  color: #fff;
   border-radius: 999px;
   background: #3a97d4;
   border: 3px solid #3a97d4;
 }
-
 
 .completed::before {
   border-color: #19857b;
@@ -138,9 +138,12 @@
   border-color: #19857b;
 }
 
-
 .pink::before {
   border-color: #ea64df;
+}
+
+.timeline .pink b {
+  color: #ea64df;
 }
 
 .pink .title::before {
@@ -155,31 +158,29 @@
 }
 
 /* text right if the card is even  */
-.card:nth-child(even)>.info>.title {
+.card:nth-child(even) > .info > .title {
   /* text-align: right; */
 }
 
 /* setting dot to the left if the card is odd */
-.card:nth-child(odd)>.info>.title::before {
+.card:nth-child(odd) > .info > .title::before {
   content: counter(section);
   left: -52px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: Mulish;
 }
 
 /* setting dot to the right if the card is odd */
-.card:nth-child(even)>.info>.title::before {
+.card:nth-child(even) > .info > .title::before {
   content: counter(section);
   right: -52px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: Mulish;
 }
 
-.card:nth-child(even)>.info>.title {
+.card:nth-child(even) > .info > .title {
   flex-direction: row-reverse;
 }
 
@@ -189,13 +190,13 @@
   display: inline-block;
   border-radius: 50%;
   border: 5px solid rgba(0, 0, 0, 0.1);
-  background: #c66857;
+  background: #cf4e37;
   width: 2em;
   height: 2em;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: border .3s ease;
+  transition: border 0.3s ease;
 }
 
 .label__checked {
@@ -208,7 +209,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: border .3s ease;
+  transition: border 0.3s ease;
 }
 
 .label__check button:hover,
@@ -220,7 +221,6 @@
   position: absolute;
   transform: translate(-50%, -50%);
 }
-
 
 .changeColor {
   position: fixed;
@@ -240,14 +240,13 @@
 
 .blueIcon {
   color: #3a97d4;
-
 }
 
 .pinkIcon {
   color: #ea64df;
 }
 
-@media(max-width: 599px) {
+@media (max-width: 599px) {
   .changeColor {
     right: 8px;
     bottom: 8px;

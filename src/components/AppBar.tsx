@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { styled } from '@mui/material/styles'
 import { useState } from 'react'
 import { useRouter } from 'next/router'
 import AppBar from '@mui/material/AppBar'
@@ -11,7 +12,7 @@ import MenuIcon from '@mui/icons-material/Menu'
 import Container from '@mui/material/Container'
 import Avatar from '@mui/material/Avatar'
 import Button from '@mui/material/Button'
-import Tooltip from '@mui/material/Tooltip'
+import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip'
 import MenuItem from '@mui/material/MenuItem'
 import { useAuth } from '../context/AuthContext'
 import Image from 'next/image'
@@ -22,6 +23,17 @@ interface PageType {
   link: string
   protected?: boolean
 }
+
+const LightTooltip = styled(({ className, ...props }: TooltipProps) => (
+  <Tooltip {...props} classes={{ popper: className }} />
+))(({ theme }) => ({
+  [`& .${tooltipClasses.tooltip}`]: {
+    backgroundColor: theme.palette.common.white,
+    color: 'rgba(0, 0, 0, 0.87)',
+    boxShadow: theme.shadows[1],
+    fontSize: 12,
+  },
+}))
 
 const pages: PageType[] = [
   { title: 'cursos', link: '/cursos' },
@@ -156,7 +168,13 @@ function ResponsiveAppBar() {
           >
             Vereda
           </Typography>
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: 'none', md: 'flex' },
+              justifyContent: 'flex-end',
+            }}
+          >
             {pages.map((page) =>
               page.protected && !user.uid ? (
                 ''
@@ -173,14 +191,20 @@ function ResponsiveAppBar() {
           </Box>
 
           {user.uid ? (
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title={user.name || ''}>
+            <Box sx={{ flexGrow: 0, ml: 2 }}>
+              <LightTooltip title={user.name || ''}>
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar sx={{ color: '#fff', backgroundColor: '#313546' }}>
+                  <Avatar
+                    sx={{
+                      color: '#fff',
+                      backgroundColor: '#313546',
+                      border: '1px solid #ccc',
+                    }}
+                  >
                     {getNameToAvatar()}
                   </Avatar>
                 </IconButton>
-              </Tooltip>
+              </LightTooltip>
               <Menu
                 sx={{ mt: '45px' }}
                 id="menu-appbar"

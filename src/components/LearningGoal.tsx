@@ -40,7 +40,6 @@ function LearningGoal({ onChangeValue, learningGoal }: LearningGoalProp) {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          fontFamily: 'Mulish',
         }}
       >
         {learningGoal.sequence}
