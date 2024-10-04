@@ -33,7 +33,17 @@ function MyApp(props: MyAppProps) {
             content="Aplicativo para acompanhamento de objetivos de aprendizagem"
           />
           <link rel="icon" href="/favicon.ico"></link>
-          <title>Vereda - App para acompanhamento de seu aprendizado</title>
+          <title>Vereda</title>
+          <meta property="og:title" content="Vereda" />
+          <meta
+            property="og:description"
+            content="Aplicativo para acompanhamento de objetivos de aprendizagem"
+          />
+          <meta property="og:url" content="https://vereda.vercel.app" />
+          <meta
+            property="og:image"
+            content="https://vereda.vercel.app/static/logo.png"
+          />
         </Head>
         <ThemeProvider theme={theme}>
           <CssBaseline />
